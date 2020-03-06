@@ -88,6 +88,9 @@ public class TestOptional {
 		Optional<NewMan> op = Optional.ofNullable(new NewMan(godness));
 		String name = getGodnessName2(op);
 		System.out.println(name);
+		System.out.println("---------------------");
+		String name2 = getGodnessName2(Optional.empty());
+		System.out.println(name2);
 	}
 	
 	public String getGodnessName2(Optional<NewMan> man){

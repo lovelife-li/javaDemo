@@ -95,35 +95,37 @@ public class TestStreamAPI3 {
 		Optional<Double> max = emps.stream()
 			.map(Employee::getSalary)
 			.collect(Collectors.maxBy(Double::compare));
-		
+		// 求最大值
 		System.out.println(max.get());
 		
 		Optional<Employee> op = emps.stream()
 			.collect(Collectors.minBy((e1, e2) -> Double.compare(e1.getSalary(), e2.getSalary())));
-		
+		// 求最小值
 		System.out.println(op.get());
 		
 		Double sum = emps.stream()
 			.collect(Collectors.summingDouble(Employee::getSalary));
-		
+		// 求和
 		System.out.println(sum);
 		
 		Double avg = emps.stream()
 			.collect(Collectors.averagingDouble(Employee::getSalary));
-		
+		// 求平均值
 		System.out.println(avg);
 		
 		Long count = emps.stream()
 			.collect(Collectors.counting());
-		
+		// 求总个数
 		System.out.println(count);
 		
 		System.out.println("--------------------------------------------");
-		
+
+		// 得到统计结果
 		DoubleSummaryStatistics dss = emps.stream()
 			.collect(Collectors.summarizingDouble(Employee::getSalary));
 		
 		System.out.println(dss.getMax());
+		System.out.println(dss.getAverage());
 	}
 	
 	//分组

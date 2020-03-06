@@ -29,6 +29,12 @@ public class TestLambda1 {
 			}
 			
 		});
+
+		ts2.add("a");
+
+		ts2.add("cde");
+		ts2.add("bc");
+		System.out.println(ts2);
 	}
 	
 	//现在的 Lambda 表达式
