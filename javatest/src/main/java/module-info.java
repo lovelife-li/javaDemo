@@ -6,6 +6,7 @@ module javatest {
     requires multijar;
     requires junit;
 //    requires jdk.incubator.httpclient;
+    requires com.google.common;
     requires java.net.http;
 }
 
