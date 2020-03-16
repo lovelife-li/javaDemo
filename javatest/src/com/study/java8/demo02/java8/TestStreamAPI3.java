@@ -9,9 +9,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.study.java8.demo02.java8.Employee.Status;
 import org.junit.Test;
-
-import com.atguigu.java8.Employee.Status;
 
 public class TestStreamAPI3 {
 	

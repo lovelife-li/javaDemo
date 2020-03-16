@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import com.study.java8.demo02.java8.Employee.Status;
 import org.junit.Test;
-
-import com.atguigu.java8.Employee.Status;
 
 /*
  * 一、 Stream 的操作步骤
