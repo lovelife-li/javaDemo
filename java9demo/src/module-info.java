@@ -3,5 +3,5 @@
  */
 module java9demo {
     //package we export
-    exports com.atguigu.bean;
+    exports com.study.bean;
 }
