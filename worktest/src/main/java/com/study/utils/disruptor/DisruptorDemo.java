@@ -1,5 +1,6 @@
 package com.study.utils.disruptor;
 
+import com.lmax.disruptor.ExceptionHandler;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.YieldingWaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
@@ -20,6 +21,22 @@ public class DisruptorDemo {
                 new YieldingWaitStrategy()
         );
         disruptor.handleEventsWith(new OrderEventHandler01()).then(new OrderEventHandler03());
+        disruptor.setDefaultExceptionHandler(new ExceptionHandler<OrderEvent>() {
+            @Override
+            public void handleEventException(Throwable ex, long sequence, OrderEvent event) {
+
+            }
+
+            @Override
+            public void handleOnStartException(Throwable ex) {
+
+            }
+
+            @Override
+            public void handleOnShutdownException(Throwable ex) {
+
+            }
+        });
         disruptor.start();
         RingBuffer<OrderEvent> ringBuffer = disruptor.getRingBuffer();
         OrderEventProducer eventProducer = new OrderEventProducer(ringBuffer);

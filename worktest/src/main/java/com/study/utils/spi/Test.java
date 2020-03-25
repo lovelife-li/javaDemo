@@ -1,6 +1,8 @@
 package com.study.utils.spi;
 
-import io.netty.example.chapter0.Cat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -36,4 +38,13 @@ public class Test {
         Assert.assertArrayEquals(Arrays.asList("1", "2", "3").toArray(), list.toArray());
     }
 
+
+
+}
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+class Cat{
+    private int age;
+    private String name;
 }

@@ -1,7 +1,7 @@
 package com.study.utils.reflect;
 
 import com.google.common.base.Stopwatch;
-import io.netty.example.chapter0.rpc01.Service;
+import com.study.rpc.demo01.Service;
 import org.junit.Test;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.ResourcesScanner;

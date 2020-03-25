@@ -17,7 +17,6 @@ package com.study.utils.hystrix.basic;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.netflix.hystrix.examples.basic.CommandWithStubbedFallback.UserAccount;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +27,7 @@ import static org.junit.Assert.assertTrue;
  * combining defaults and injected values from elsewhere in the system (such as
  * HTTP request headers, arguments and cookies or other services previously executed).
  */
-public class CommandWithStubbedFallback extends HystrixCommand<UserAccount> {
+public class CommandWithStubbedFallback extends HystrixCommand<CommandWithStubbedFallback.UserAccount> {
 
     private final int customerId;
     private final String countryCodeFromGeoLookup;

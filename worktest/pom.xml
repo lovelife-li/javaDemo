@@ -12,9 +12,15 @@
     <properties>
         <java.version>11</java.version>
         <jmh.version>1.14.1</jmh.version>
+        <spring.version>5.2.2.RELEASE</spring.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

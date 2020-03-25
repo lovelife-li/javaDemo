@@ -17,7 +17,6 @@ package com.study.utils.hystrix.basic;
 
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixObservableCommand;
-import com.netflix.hystrix.examples.basic.ObservableCommandNumbersToWords.NumberWord;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -28,7 +27,7 @@ import java.util.Map;
 /**
  * A simple Hystrix Observable command that translates a number (<code>Integer</code>) into an English text.
  */
-class ObservableCommandNumbersToWords extends HystrixObservableCommand<NumberWord>
+class ObservableCommandNumbersToWords extends HystrixObservableCommand<ObservableCommandNumbersToWords.NumberWord>
 {
 	private final List<Integer> numbers;
 
