@@ -1,8 +1,5 @@
 package com.study.entity;
 
-/**
- * Created by songhongkang on 2017/12/29 0029.
- */
 public class User {
 
     private String name;

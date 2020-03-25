@@ -18,10 +18,9 @@ public class RateLimiterTest {
     @Test
     public void test1(){
         // 限流器流速：2 个请求 / 秒
-        RateLimiter limiter = RateLimiter.create(2.0);
+        RateLimiter limiter = RateLimiter.create(4.0);
         // 执行任务的线程池
-        ExecutorService es = Executors
-                .newFixedThreadPool(1);
+        ExecutorService es = Executors.newFixedThreadPool(1);
         // 记录上一次执行时间
         AtomicLong prev = new AtomicLong(System.nanoTime());
         // 测试执行 20 次
@@ -37,6 +36,7 @@ public class RateLimiterTest {
                 prev.set(cur);
             });
         }
+        // 主线程sleep,相当于每隔500ms ，允许线程池执行任务。
         System.out.println("hello");
     }
 

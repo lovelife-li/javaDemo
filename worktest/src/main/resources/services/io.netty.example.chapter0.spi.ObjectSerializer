@@ -1,0 +1,2 @@
+io.netty.example.chapter0.spi.KryoSerializer
+io.netty.example.chapter0.spi.JavaSerializer

@@ -74,11 +74,9 @@ public class FutureTest1 {
     @Test
     public void Test4() throws ExecutionException, InterruptedException {
         // 创建 FutureTask
-        FutureTask<Integer> futureTask
-                = new FutureTask<>(()-> 1+2);
+        FutureTask<Integer> futureTask = new FutureTask<>(()-> 1+2);
         // 创建线程池
-        ExecutorService es =
-                Executors.newCachedThreadPool();
+        ExecutorService es = Executors.newCachedThreadPool();
         // 提交 FutureTask
         es.submit(futureTask);
         // 获取计算结果
