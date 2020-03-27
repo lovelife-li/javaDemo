@@ -1,4 +1,4 @@
-package com.study.java8.demo01.exer;
+package com.study.javanewspecial.java8.demo01.exer;
 
 @FunctionalInterface
 public interface MyFunction {

@@ -67,10 +67,26 @@ public class ConcurrentHashMapTest {
         Map<String, String> map = new HashMap<>();
         map.put("a","A");
         map.put("b","B");
-        String v = map.computeIfAbsent("b",k->"v");  // 输出 B
+        String v = map.computeIfAbsent("b",k->{
+            System.out.println("==========");
+            return "abc";
+        });  // 输出 B
         System.out.println(v);
-        String v1 = map.computeIfAbsent("c",k->"v"); // 输出 v
+        String v1 = map.computeIfAbsent("c",k->{
+            System.out.println("key:"+k);
+            return "v1";
+        }); // 输出 v
         System.out.println(v1);
+        map.computeIfAbsent("b",(x)->"v");
+        String x = map.computeIfPresent("f", (key, value) -> {
+            return "world";
+        });
+        System.out.println(x);
+        System.out.println(map);
+
+
+
+
     }
 
 }
