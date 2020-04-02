@@ -17,8 +17,9 @@ public class Son implements A {
         System.out.println(A.class.isInterface());
         Type[] types = A.class.getGenericInterfaces();
         Type[] types1 = Son.class.getGenericInterfaces();
-        System.out.println(types1[0].getTypeName());
+        System.out.println(types1[0].getTypeName()+","+types1[1].getTypeName());
 
+        System.out.println("----------------");
 
         Constructor<Son> declaredConstructor = Son.class.getDeclaredConstructor(int.class);
         System.out.println(declaredConstructor.getName());

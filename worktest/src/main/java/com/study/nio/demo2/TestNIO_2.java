@@ -131,9 +131,10 @@ public class TestNIO_2 {
 		System.out.println(path.getParent());
 		System.out.println(path.getRoot());
 		
-//		Path newPath = path.resolve("e:/hello.txt");
-//		System.out.println(newPath);
-		
+		Path newPath1 = path.resolve("e:/hello.txt");
+		System.out.println(newPath1);
+
+		System.out.println("------------");
 		Path path2 = Paths.get("1.jpg");
 		Path newPath = path2.toAbsolutePath();
 		System.out.println(newPath);
@@ -143,7 +144,7 @@ public class TestNIO_2 {
 	
 	@Test
 	public void test1(){
-		Path path = Paths.get("e:/", "nio/hello.txt");
+		Path path = Paths.get("e:/", "record.txt");
 		
 		System.out.println(path.endsWith("hello.txt"));
 		System.out.println(path.startsWith("e:/"));

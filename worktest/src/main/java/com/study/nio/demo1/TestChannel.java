@@ -71,13 +71,13 @@ public class TestChannel {
 		CharsetDecoder cd = cs1.newDecoder();
 		
 		CharBuffer cBuf = CharBuffer.allocate(1024);
-		cBuf.put("尚硅谷威武！");
+		cBuf.put("世界和平！");
 		cBuf.flip();
 		
 		//编码
 		ByteBuffer bBuf = ce.encode(cBuf);
 		
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 10; i++) {
 			System.out.println(bBuf.get());
 		}
 		
@@ -173,7 +173,7 @@ public class TestChannel {
 		System.out.println("耗费时间为：" + (end - start));
 	}
 	
-	//利用通道完成文件的复制（非直接缓冲区）
+	//利用通道完成文件的复制（非直接缓冲区） getChannel
 	@Test
 	public void test1(){//10874-10953
 		long start = System.currentTimeMillis();

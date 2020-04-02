@@ -61,20 +61,22 @@ public class TestBuffer {
 		System.out.println(buf.position());
 		
 		//mark() : 标记
+		//  mark = position;
 		buf.mark();
 		
 		buf.get(dst, 2, 2);
 		System.out.println(new String(dst, 2, 2));
 		System.out.println(buf.position());
-		
+
+		System.out.println("-----------");
 		//reset() : 恢复到 mark 的位置
 		buf.reset();
 		System.out.println(buf.position());
 		
 		//判断缓冲区中是否还有剩余数据
 		if(buf.hasRemaining()){
-			
-			//获取缓冲区中可以操作的数量
+			System.out.println("======");
+			//获取缓冲区中可以操作的数量limit - position;
 			System.out.println(buf.remaining());
 		}
 	}
@@ -90,7 +92,7 @@ public class TestBuffer {
 		System.out.println(buf.position());
 		System.out.println(buf.limit());
 		System.out.println(buf.capacity());
-		
+
 		//2. 利用 put() 存入数据到缓冲区中
 		buf.put(str.getBytes());
 		
@@ -100,6 +102,11 @@ public class TestBuffer {
 		System.out.println(buf.capacity());
 		
 		//3. 切换读取数据模式
+		/**
+		 * limit = position;
+		 * position = 0;
+		 * mark = -1;
+		 */
 		buf.flip();
 		
 		System.out.println("-----------------flip()----------------");
@@ -107,7 +114,7 @@ public class TestBuffer {
 		System.out.println(buf.limit());
 		System.out.println(buf.capacity());
 		
-		//4. 利用 get() 读取缓冲区中的数据
+		//4. 利用 get() 读取缓冲区中的数据到dst
 		byte[] dst = new byte[buf.limit()];
 		buf.get(dst);
 		System.out.println(new String(dst, 0, dst.length));
@@ -118,6 +125,10 @@ public class TestBuffer {
 		System.out.println(buf.capacity());
 		
 		//5. rewind() : 可重复读
+		/**
+		 * position = 0;
+		 * mark = -1;
+		 */
 		buf.rewind();
 		
 		System.out.println("-----------------rewind()----------------");
@@ -126,6 +137,11 @@ public class TestBuffer {
 		System.out.println(buf.capacity());
 		
 		//6. clear() : 清空缓冲区. 但是缓冲区中的数据依然存在，但是处于“被遗忘”状态
+		/**
+		 * position = 0;
+		 * limit = capacity;
+		 *  mark = -1;
+		 */
 		buf.clear();
 		
 		System.out.println("-----------------clear()----------------");
