@@ -58,7 +58,7 @@ public class TestNIO_2 {
 	 */
 	@Test
 	public void test6() throws IOException{
-		Path path = Paths.get("e:/nio/hello7.txt");
+		Path path = Paths.get("E:\\BaiduNetdiskDownload\\java基础\\worktest\\1.txt");
 //		System.out.println(Files.exists(path, LinkOption.NOFOLLOW_LINKS));
 		
 		BasicFileAttributes readAttributes = Files.readAttributes(path, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
@@ -104,7 +104,7 @@ public class TestNIO_2 {
 	public void test3() throws IOException{
 		Path path1 = Paths.get("e:/nio/hello.txt");
 		Path path2 = Paths.get("e:/nio/hello2.txt");
-		
+		// 文件复制
 		Files.copy(path1, path2, StandardCopyOption.REPLACE_EXISTING);
 	}
 	
@@ -118,7 +118,7 @@ public class TestNIO_2 {
 			Path getFileName() : 返回与调用 Path 对象关联的文件名
 			Path getName(int idx) : 返回的指定索引位置 idx 的路径名称
 			int getNameCount() : 返回Path 根目录后面元素的数量
-			Path getParent() ：返回Path对象包含整个路径，不包含 Path 对象指定的文件路径
+			Path getParent() ：返回父路径
 			Path getRoot() ：返回调用 Path 对象的根路径
 			Path resolve(Path p) :将相对路径解析为绝对路径
 			Path toAbsolutePath() : 作为绝对路径返回调用 Path 对象
@@ -144,14 +144,15 @@ public class TestNIO_2 {
 	
 	@Test
 	public void test1(){
-		Path path = Paths.get("e:/", "record.txt");
+		Path path = Paths.get("e:/abcd", "record.txt");
 		
 		System.out.println(path.endsWith("hello.txt"));
 		System.out.println(path.startsWith("e:/"));
-		
-		System.out.println(path.isAbsolute());
-		System.out.println(path.getFileName());
-		
+		System.out.println(path.getParent());
+		System.out.println("path.isAbsolute():"+path.isAbsolute());
+		System.out.println("path.getFileName():"+path.getFileName());
+		System.out.println("path.getNameCount():"+path.getNameCount());
+
 		for (int i = 0; i < path.getNameCount(); i++) {
 			System.out.println(path.getName(i));
 		}

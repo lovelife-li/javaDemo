@@ -71,16 +71,17 @@ public class TestChannel {
 		CharsetDecoder cd = cs1.newDecoder();
 		
 		CharBuffer cBuf = CharBuffer.allocate(1024);
-		cBuf.put("世界和平！");
+		cBuf.put("世界和平！你好，abcde");
 		cBuf.flip();
 		
 		//编码
 		ByteBuffer bBuf = ce.encode(cBuf);
-		
+
+		// 只取了10个
 		for (int i = 0; i < 10; i++) {
-			System.out.println(bBuf.get());
+			System.out.print(bBuf.get());
 		}
-		
+		System.out.println();
 		//解码
 		bBuf.flip();
 		CharBuffer cBuf2 = cd.decode(bBuf);
@@ -115,10 +116,11 @@ public class TestChannel {
 		
 		//2. 分配指定大小的缓冲区
 		ByteBuffer buf1 = ByteBuffer.allocate(100);
-		ByteBuffer buf2 = ByteBuffer.allocate(1024);
+		ByteBuffer buf2 = ByteBuffer.allocate(2048);
 		
 		//3. 分散读取
 		ByteBuffer[] bufs = {buf1, buf2};
+		// 把数据读到数组里面
 		channel1.read(bufs);
 		
 		for (ByteBuffer byteBuffer : bufs) {

@@ -38,7 +38,8 @@ public class TestBlockingNIO {
 		//1. 获取通道
 		SocketChannel sChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 9898));
 		
-		FileChannel inChannel = FileChannel.open(Paths.get("1.jpg"), StandardOpenOption.READ);
+		FileChannel inChannel = FileChannel.open(Paths.get("e:\\rocketmq-all-4.4.0-bin-release.zip"),
+				StandardOpenOption.READ);
 		
 		//2. 分配指定大小的缓冲区
 		ByteBuffer buf = ByteBuffer.allocate(1024);
@@ -60,13 +61,14 @@ public class TestBlockingNIO {
 	public void server() throws IOException{
 		//1. 获取通道
 		ServerSocketChannel ssChannel = ServerSocketChannel.open();
-		
-		FileChannel outChannel = FileChannel.open(Paths.get("2.jpg"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
-		
+
 		//2. 绑定连接
 		ssChannel.bind(new InetSocketAddress(9898));
 		
-		//3. 获取客户端连接的通道
+		FileChannel outChannel = FileChannel.open(Paths.get("e:\\rocketmq-all-4.4.0-bin-release2.zip"),
+				StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+		
+		//3. 获取客户端连接的通道,阻塞...
 		SocketChannel sChannel = ssChannel.accept();
 		
 		//4. 分配指定大小的缓冲区
