@@ -31,6 +31,7 @@ public class NIOClient {
         socketChannel.configureBlocking(false);
         // 打开选择器
         Selector selector = Selector.open();
+        System.out.println("selector:" + selector);
         // 注册连接服务端socket动作
         socketChannel.register(selector, SelectionKey.OP_CONNECT);
         // 连接
@@ -43,7 +44,7 @@ public class NIOClient {
         SocketChannel client;
         String receiveText;
         String sendText;
-        int count=0;
+        int count = 0;
 
         while (true) {
             //选择一组键，其相应的通道已为 I/O 操作准备就绪。
@@ -68,16 +69,17 @@ public class NIOClient {
                         sendbuffer.flip();
                         client.write(sendbuffer);
                     }
+                    System.out.println("selectionKey.isConnectable(),selector:"+selector);
                     client.register(selector, SelectionKey.OP_READ);
                 } else if (selectionKey.isReadable()) {
                     client = (SocketChannel) selectionKey.channel();
                     //将缓冲区清空以备下次读取
                     receivebuffer.clear();
                     //读取服务器发送来的数据到缓冲区中
-                    count=client.read(receivebuffer);
-                    if(count>0){
-                        receiveText = new String( receivebuffer.array(),0,count);
-                        System.out.println("客户端接受服务器端数据--:"+receiveText);
+                    count = client.read(receivebuffer);
+                    if (count > 0) {
+                        receiveText = new String(receivebuffer.array(), 0, count);
+                        System.out.println("客户端接受服务器端数据--:" + receiveText);
                         client.register(selector, SelectionKey.OP_WRITE);
                     }
 
@@ -89,7 +91,7 @@ public class NIOClient {
                     //将缓冲区各标志复位,因为向里面put了数据标志被改变要想从中读取数据发向服务器,就要复位
                     sendbuffer.flip();
                     client.write(sendbuffer);
-                    System.out.println("客户端向服务器端发送数据--："+sendText);
+                    System.out.println("客户端向服务器端发送数据--：" + sendText);
                     client.register(selector, SelectionKey.OP_READ);
                 }
             }

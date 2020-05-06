@@ -102,8 +102,8 @@ public class TestNIO_2 {
 	
 	@Test
 	public void test3() throws IOException{
-		Path path1 = Paths.get("e:/nio/hello.txt");
-		Path path2 = Paths.get("e:/nio/hello2.txt");
+		Path path1 = Paths.get("e:/banhua.txt");
+		Path path2 = Paths.get("e:/banhua2.txt");
 		// 文件复制
 		Files.copy(path1, path2, StandardCopyOption.REPLACE_EXISTING);
 	}
@@ -135,7 +135,8 @@ public class TestNIO_2 {
 		System.out.println(newPath1);
 
 		System.out.println("------------");
-		Path path2 = Paths.get("1.jpg");
+		Path path2 = Paths.get("abc/1.jpg");
+		System.out.println(path2);
 		Path newPath = path2.toAbsolutePath();
 		System.out.println(newPath);
 		

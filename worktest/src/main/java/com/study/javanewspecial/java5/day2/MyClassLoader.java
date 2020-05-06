@@ -1,65 +1,77 @@
 package com.study.javanewspecial.java5.day2;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-public class MyClassLoader extends ClassLoader{
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) throws Exception{
-		// TODO Auto-generated method stub
-		String srcpath = "E:\\MyEclipse 8.5WorkSpace\\javaMail1\\bin\\cn\\itcast\\day2\\ClassLoaderAttachment.class";
-		String destDir = args[0];
-		System.out.println(srcpath);
-		InputStream is = new FileInputStream(srcpath);
-		String destFileName = srcpath.substring(srcpath.lastIndexOf("\\")+1);
-		String destFilePath = destDir+"\\"+destFileName;
-		OutputStream os = new FileOutputStream(destFilePath);
-		encrypt(is, os);
-		os.close();  
-		is.close();
-	}
-	
-	public static void encrypt(InputStream is,OutputStream os)throws Exception{
-		int b =-1;
-		
-		while((b= is.read())!=-1){
-			os.write(b ^ 0xff);
-		}
-		
-	}
+public class MyClassLoader extends ClassLoader {
 
-	private String classDir;
-	@Override
-	protected Class<?> findClass(String name)  throws ClassNotFoundException{
-		
-		String classFileName = classDir + "\\"+name.substring(name.lastIndexOf(".")+1)+".class";
-		try {
-			InputStream is = new FileInputStream(classFileName);
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			//encrypt(is, bos);//����
-			System.out.println("aaa");
-			is.close();
-			byte[] b = bos.toByteArray();
-			bos.close();
-			return defineClass(b, 0, b.length);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return super.findClass(name);
-	}
-	public MyClassLoader(){
-		
-	}
-	public MyClassLoader(String classDir){
-		this.classDir = classDir;
-	}
+    /**
+     * @param args
+     */
+    public static void main(String[] args) throws Exception {
+        Path src = Paths.get("worktest/target/classes/com\\study" +
+                "\\javanewspecial\\java5\\day2\\ClassLoaderAttachment.class");
+        src = src.toAbsolutePath();
+        Path dest = Paths.get("worktest/classloader/ClassLoaderAttachment.class").toAbsolutePath();
+        System.out.println(src);
+        System.out.println(dest);
+
+        Files.copy(src,dest,StandardCopyOption.REPLACE_EXISTING);
+
+    }
+
+    public static void encrypt(InputStream is, OutputStream os) throws Exception {
+        int b = -1;
+
+        while ((b = is.read()) != -1) {
+            os.write(b ^ 0xff);
+        }
+
+    }
+
+    private String classDir;
+
+    @Override
+    protected Class<?> findClass(String name) throws ClassNotFoundException {
+        System.out.println(name);
+        String classFileName = classDir + "\\" + name.substring(name.lastIndexOf(".") + 1) + ".class";
+        classFileName = Paths.get(classFileName).toAbsolutePath().toString();
+        System.out.println("classFileName" + classFileName);
+        try {
+            InputStream is = new FileInputStream(classFileName);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bos.write(is.readAllBytes());
+            byte[] b = bos.toByteArray();
+            bos.close();
+            is.close();
+            return defineClass(name, b, 0, b.length);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return super.findClass(name);
+    }
+
+    @Override
+    public Class<?> loadClass(String name) throws ClassNotFoundException {
+        if (name.endsWith("ClassLoaderAttachment")){
+            return findClass(name);
+        }
+        return super.loadClass(name);
+
+    }
+
+    public MyClassLoader() {
+
+    }
+
+    public MyClassLoader(String classDir) {
+        this.classDir = classDir;
+    }
+
+
 }

@@ -24,11 +24,12 @@ public class ClassLoaderTest {
 		System.out.println(loader);
 		//System.out.println(new ClassLoaderAttachment().toString());
 		
-//		Class clazz = new MyClassLoader("itcastlib").loadClass("cn.itcast.ClassLoaderAttachment");
-//		Date d1 = (Date) clazz.newInstance();
-//		System.out.println(d1);
+		Class clazz = new MyClassLoader("worktest/classloader").loadClass("com.study.javanewspecial.java5.day2" +
+				".ClassLoaderAttachment");
+		Date d1 = (Date) clazz.newInstance();
+		System.out.println(d1);
 		
-		//System.out.println(new ClassLoaderAttachment().toString()+"ϵͳ");
+		System.out.println(new ClassLoaderAttachment().toString()+"ϵͳ");
 	}
 
 }

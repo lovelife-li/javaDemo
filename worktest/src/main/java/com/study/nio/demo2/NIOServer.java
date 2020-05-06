@@ -50,6 +50,7 @@ public class NIOServer {
         // 通过open()方法找到Selector
         // 底层： 开启epoll，为当前socket服务创建epoll服务，epoll_create
         selector = Selector.open();
+        System.out.println("selector:" + selector);
         // 注册到selector，等待连接
         /**
          * 底层：
@@ -72,7 +73,9 @@ public class NIOServer {
              * epoll底层维护一个链表，rdlist，基于事件驱动模式，当网卡有数据请求过来，会发起硬件中断，通知内核已经有来了。内核调用
              * 回调函数，将当前的事件添加到rdlist中，将当前可用的rdlist列表发送给用户态，用户去遍历rdlist中的事件，进行处理
              */
+            System.out.println("selector.select()这里会阻塞，等待客户端通道注册....");
             selector.select();
+            System.out.println("客户端注册后....");
             // 返回此选择器的已选择键集。
             Set<SelectionKey> selectionKeys = selector.selectedKeys();
             Iterator<SelectionKey> iterator = selectionKeys.iterator();
@@ -103,6 +106,7 @@ public class NIOServer {
             // 配置为非阻塞
             client.configureBlocking(false);
             // 注册到selector，等待连接
+            System.out.println("selectionKey.isAcceptable(),selector:"+selector);
             client.register(selector, SelectionKey.OP_READ);
         } else if (selectionKey.isReadable()) {
             // 返回为之创建此键的通道。
