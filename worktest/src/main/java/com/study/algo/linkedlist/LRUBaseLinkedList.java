@@ -35,6 +35,7 @@ public class LRUBaseLinkedList<T> {
             --length;
         }
         tNode.next = head;
+        head = tNode;
         ++length;
     }
 
@@ -79,6 +80,7 @@ public class LRUBaseLinkedList<T> {
         Node cur = head;
         while (cur != null) {
             System.out.print(cur.data + "->");
+            cur = cur.next;
         }
         System.out.print("null");
         System.out.println();
@@ -91,5 +93,24 @@ public class LRUBaseLinkedList<T> {
         public Node(T data) {
             this.data = data;
         }
+    }
+
+    public static void main(String[] args) {
+        LRUBaseLinkedList<Integer> list = new LRUBaseLinkedList<>();
+        list.put(1);
+        list.put(2);
+        list.put(3);
+        list.put(4);
+        list.put(5);
+        list.put(6);
+        list.put(7);
+        list.put(8);
+        list.put(9);
+        list.put(10);
+        list.put(11);
+        list.find(5);
+        list.find(4);
+        list.put(13);
+        list.print();
     }
 }
