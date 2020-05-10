@@ -56,7 +56,7 @@ public class Array {
             return false;
         }
         // 删除位置后面元素前移
-        for (int i = index + 1; i <= count; i++) {
+        for (int i = index + 1; i < count; i++) {
             data[i - 1] = data[i];
         }
         --count;
