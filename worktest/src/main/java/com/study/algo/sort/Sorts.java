@@ -347,7 +347,7 @@ public class Sorts {
      * @param right
      * @return
      */
-    private static void quickSort3(int[] arr, int left, int right) {
+    public static void quickSort3(int[] arr, int left, int right) {
         if (left >= right) {
             return;
         }
@@ -392,12 +392,69 @@ public class Sorts {
 
     /**
      * 双轴快速排序
-     *
-     * @param arr
-     * @param left
-     * @param right
+     * 双轴快速排序算法使用两个轴，通常选取最左边的元素作为pivot1和最右边的元素作pivot2。
+     * 首先要比较这两个轴的大小，如果pivot1 > pivot2，则交换最左边的元素和最右边的元素，
+     * 已保证pivot1 <=  pivot2。双轴快速排序同样使用i，j，k三个变量将数组分成四部分
+     * <p>
+     * A[L+1, i]是小于pivot1的部分，A[i+1, k-1]是大于等于pivot1且小于等于pivot2的部分，
+     * A[j, R]是大于pivot2的部分，而A[k, j-1]是未知部分。
+     * 和三向切分的快速排序算法一样，初始化i = L，k = L+1，j=R，k自左向右扫描直到k与j相交为止（k == j）。
+     * 我们扫描的目的就是逐个减少未知元素，并将每个元素按照和pivot1和pivot2的大小关系放到不同的区间上去。
      */
-    private static void quickSort4(int[] arr, int left, int right) {
+    public static void quickSort4(int[] arr, int left, int right) {
+        if (left >= right) {
+            return;
+        }
+
+        int l = left;
+        int k = l + 1;
+        int r = right;
+        int tmp;
+        if (arr[l] > arr[r]) {
+            tmp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = tmp;
+        }
+        int pivot1 = arr[l];
+        int pivot2 = arr[r];
+        while (k < r) {
+            if (arr[k] < pivot1) {
+                l++;
+                if (l != k) {
+                    tmp = arr[k];
+                    arr[k] = arr[l];
+                    arr[l] = tmp;
+                }
+                k++;
+            } else if (arr[k] > pivot2) {
+                --r;
+                if (arr[r] < pivot1) {
+                    ++l;
+                    tmp = arr[k];
+                    arr[k] = arr[l];
+                    arr[l] = arr[r];
+                    arr[r] = tmp;
+                    ++k;
+
+                } else if (arr[r] > pivot2) {
+                } else {
+                    tmp = arr[k];
+                    arr[k] = arr[r];
+                    arr[r] = tmp;
+                    ++k;
+                }
+            } else {
+                k++;
+            }
+        }
+        arr[left] = arr[l];
+        arr[l] = pivot1;
+        arr[right] = arr[r];
+        arr[r] = pivot2;
+
+        quickSort4(arr, left, l - 1);
+        quickSort4(arr, l + 1, r - 1);
+        quickSort4(arr, r + 1, right);
 
     }
 
@@ -421,14 +478,14 @@ public class Sorts {
     }
 
     public static void main(String[] args) {
-        int[] arr = {2, 1, 5, 6, 8, 4, 7, -1, 3, 13, 5, 8, 12, 14, -4};
+        int[] arr = {12, 1, 5, 6, 8, 4, 7, -1, 3, 13, 9, 8, 12, 10, 4};
 //        bubbleSort(arr,6);
 //        bubbleSort2(arr,6);
 //        insertSort(arr);
 //        insertSort(arr,6);
 //        selectSort(arr, 100);
 //        mergeSort(arr, 0, arr.length - 1);
-        quickSort3(arr, 0, arr.length - 1);
+        quickSort4(arr, 0, arr.length - 1);
         System.out.println(sort(arr, 0, arr.length - 1, 1));
 
 //        Arrays.sort(arr);// 双轴排序
