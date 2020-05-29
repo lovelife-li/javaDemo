@@ -1,5 +1,7 @@
 package com.study;
 
+import java.util.UUID;
+
 /**
  * @author ldb
  * @date 2020/04/01 15:33
@@ -21,6 +23,8 @@ public class Test2 {
         System.out.println(Integer.toBinaryString(2));
         System.out.println(Integer.toBinaryString(-1<<14));
         System.out.println(-1<<14);
+
+        System.out.println(UUID.randomUUID());
     }
 
     public void test() {

@@ -13,6 +13,7 @@ import java.util.function.Function;
 @Slf4j
 public class DisruptorDemo {
     public static void main(String[] args) throws InterruptedException {
+        // 1,创建
         Disruptor<OrderEvent> disruptor = new Disruptor<>(
                 OrderEvent::new,
                 1024 * 1024,
