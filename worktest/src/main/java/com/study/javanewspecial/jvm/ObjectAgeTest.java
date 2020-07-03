@@ -11,9 +11,9 @@ public class ObjectAgeTest {
 
     /**
      * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8
-     *  -XX:MaxTenuringThreshold=1 -XX:+UseConcMarkSweepGC
+     *  -XX:MaxTenuringThreshold=1 -XX:+UseSerialGC
      *  -XX:+PrintTenuringDistribution jdk11无效
-     *
+     *  -XX:+HeapDumpOnOutOfMemoryError 在内存溢出异常出现之后自动生成堆转储快照文件
      */
     @SuppressWarnings("unused")
     public static void testTenuringThreshold() {

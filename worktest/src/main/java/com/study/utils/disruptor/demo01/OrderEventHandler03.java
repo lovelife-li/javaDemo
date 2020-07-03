@@ -1,4 +1,4 @@
-package com.study.utils.disruptor;
+package com.study.utils.disruptor.demo01;
 
 import com.lmax.disruptor.EventHandler;
 import lombok.extern.slf4j.Slf4j;

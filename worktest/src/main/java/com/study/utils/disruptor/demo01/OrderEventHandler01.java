@@ -1,4 +1,4 @@
-package com.study.utils.disruptor;
+package com.study.utils.disruptor.demo01;
 
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.WorkHandler;
