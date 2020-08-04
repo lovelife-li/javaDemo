@@ -44,7 +44,7 @@ public class ConcurrentHashMapTest {
 
     /**
      * putIfAbsent返回旧值，如果没有则返回null
-     * 先计算value，再判断key是否存在
+     * 指定key的value不存在，就put.存在，就什么也不做
      */
     @Test
     public void testMap3() {
@@ -55,10 +55,14 @@ public class ConcurrentHashMapTest {
         System.out.println(v);
         String v1 = map.putIfAbsent("c","v");  // 输出 null
         System.out.println(v1);
+        System.out.println(map);
+
     }
 
     /**
      * computeIfAbsent:存在时返回存在的值，不存在时返回新值
+     *  如果缺席，才设置值。返回该值。
+     *  如果不缺席，什么也不做。返回该值。
      *  参数为：key，value计算方法
      *  当key不存在时，执行value计算方法，计算value
      */
@@ -73,20 +77,37 @@ public class ConcurrentHashMapTest {
         });  // 输出 B
         System.out.println(v);
         String v1 = map.computeIfAbsent("c",k->{
-            System.out.println("key:"+k);
-            return "v1";
+            System.out.println("----key:"+k);
+            return "v";
         }); // 输出 v
         System.out.println(v1);
-        map.computeIfAbsent("b",(x)->"v");
+        String b = map.computeIfAbsent("b", (x) -> "v");
+        System.out.println(b);
+        System.out.println(map);
+
+    }
+
+    /**
+     * 如果存在，就设置值, 返回新值。
+     * 如果不存在，就不设置值。返回null.
+     */
+    @Test
+    public void testMap5() {
+        Map<String, String> map = new HashMap<>();
+        map.put("a","A");
+        map.put("b","B");
         String x = map.computeIfPresent("f", (key, value) -> {
+            System.out.println("=============");
             return "world";
         });
         System.out.println(x);
+        String b = map.computeIfPresent("b", (key, value) -> {
+            System.out.println("=============");
+            return "world";
+        });
+        System.out.println(b);
+
         System.out.println(map);
-
-
-
-
     }
 
 }
