@@ -47,8 +47,8 @@ public class Sorts {
             n = arr.length;
         }
         int tmp;
-        boolean flag = true;
         for (int i = 0; i < n - 1; i++) {
+            boolean flag = true;
             for (int j = 0; j < n - 1 - i; j++) {
                 if (arr[j] > arr[j + 1]) {
                     tmp = arr[j];
@@ -216,43 +216,10 @@ public class Sorts {
         }
 
         int q = partition3(arr, left, right);
-        quickSort(arr, 0, q - 1);
+        quickSort(arr, left, q - 1);
         quickSort(arr, q + 1, right);
     }
 
-    /**
-     * 从一边找,不知道l==r 时，arr[l]是大于pivot 还是小于pivot
-     */
-    private static int partition(int[] arr, int left, int right) {
-        // 取最后一个数分区
-        int pivot = arr[right];
-        int l = left;
-        int r = right - 1;
-        int tmp;
-        while (l < r) {
-            if (arr[l] > pivot) {
-                // 交换
-                tmp = arr[l];
-                arr[l] = arr[r];
-                arr[r] = tmp;
-                --r;
-            } else {
-                ++l;
-            }
-        }
-        if (arr[l] > pivot) {
-            tmp = arr[l];
-            arr[l] = pivot;
-            arr[right] = tmp;
-            return l;
-        } else {
-            tmp = arr[l + 1];
-            arr[l + 1] = pivot;
-            arr[right] = tmp;
-            return l + 1;
-        }
-
-    }
 
     /**
      * 从两边找,知道l==r 时，arr[l]大于pivot
@@ -338,8 +305,11 @@ public class Sorts {
 
     /**
      * 三向切分快速排序
-     * 三向切分快速排序的基本思想，用i，j，k三个将数组切分成四部分，a[L, i-1]表示小于pivot的部分，a[i, k-1]表示等于pivot的部分，
-     * a[j+1]表示大于pivot的部分，而a[k,j]表示未判定的元素（即不知道比pivot大，还是比中轴元素小）。我们要注意a[i]始终位于等于
+     * 三向切分快速排序的基本思想，用i，j，k三个将数组切分成四部分
+     * a[L, i-1]表示小于pivot的部分，
+     * a[i, k-1]表示等于pivot的部分， i表示等于pivot第一个元素
+     * a[j+1]表示大于pivot的部分，
+     * 而a[k,j]表示未判定的元素（即不知道比pivot大，还是比中轴元素小）。我们要注意a[i]始终位于等于
      * pivot部分的第一个元素，a[i]的左边是小于pivot的部分。
      *
      * @param arr
@@ -396,10 +366,14 @@ public class Sorts {
      * 首先要比较这两个轴的大小，如果pivot1 > pivot2，则交换最左边的元素和最右边的元素，
      * 已保证pivot1 <=  pivot2。双轴快速排序同样使用i，j，k三个变量将数组分成四部分
      * <p>
-     * A[L+1, i]是小于pivot1的部分，A[i+1, k-1]是大于等于pivot1且小于等于pivot2的部分，
-     * A[j, R]是大于pivot2的部分，而A[k, j-1]是未知部分。
+     * A[L+1, i]是小于pivot1的部分，
+     * A[i+1, k-1]是大于等于pivot1且小于等于pivot2的部分，
+     * A[j, R]是大于pivot2的部分，
+     * 而A[k, j-1]是未知部分。
      * 和三向切分的快速排序算法一样，初始化i = L，k = L+1，j=R，k自左向右扫描直到k与j相交为止（k == j）。
      * 我们扫描的目的就是逐个减少未知元素，并将每个元素按照和pivot1和pivot2的大小关系放到不同的区间上去。
+     * i 表示小于pivot1的最后一个元素
+     * j 表示大于pivot2的第一个元素
      */
     public static void quickSort4(int[] arr, int left, int right) {
         if (left >= right) {
@@ -467,7 +441,7 @@ public class Sorts {
         if (l >= r) {
             return -1;
         }
-        int p = partition(arr, l, r);
+        int p = partition2(arr, l, r);
         if (k == p + 1) {
             return arr[p];
         } else if (k > p + 1) {
@@ -488,8 +462,15 @@ public class Sorts {
         quickSort4(arr, 0, arr.length - 1);
         System.out.println(sort(arr, 0, arr.length - 1, 1));
 
-//        Arrays.sort(arr);// 双轴排序
+        Arrays.sort(arr);// 双轴排序
+
+        int[] arr2 = {1, 2, 9, 5, 11, 8};
+        int i = partition1(arr2, 0, arr2.length - 1);
+        System.out.println(i);
+        print(arr2);
         print(arr);
+
+
 
     }
 

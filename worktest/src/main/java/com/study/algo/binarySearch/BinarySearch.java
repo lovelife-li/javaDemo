@@ -16,6 +16,8 @@ public class BinarySearch {
 
     }
 
+
+
     public static int bsearch(int[] a, int n, int value) {
         int low = 0;
         int high = n - 1;

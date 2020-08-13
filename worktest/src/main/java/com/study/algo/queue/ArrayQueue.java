@@ -18,6 +18,7 @@ public class ArrayQueue {
 
     public int head = 0;
 
+    // 最后一个元素后面一个位置
     public int tail = 0;
 
     public ArrayQueue(int n) {

@@ -21,7 +21,7 @@ public class RadixSort {
                 max = arr[i];
             }
         }
-
+        System.out.println("max:" + max);
         // 从个位开始，对数组arr按"指数"进行排序
         for (int exp = 1; max / exp > 0; exp *= 10) {
             countingSort(arr, exp);
@@ -49,13 +49,16 @@ public class RadixSort {
         for (int i = 1; i < c.length; i++) {
             c[i] += c[i - 1];
         }
-
         // 临时数组r，存储排序之后的结果
         int[] r = new int[arr.length];
+        /**
+         * 从后向前遍历是为了保持稳定排序。相同的数，排在最后面的一定在最后
+         */
         for (int i = arr.length - 1; i >= 0; i--) {
             r[c[(arr[i] / exp) % 10] - 1] = arr[i];
             c[(arr[i] / exp) % 10]--;
         }
+
 
         for (int i = 0; i < arr.length; i++) {
             arr[i] = r[i];
@@ -63,18 +66,21 @@ public class RadixSort {
     }
 
     public static void main(String[] args) {
+        System.out.println(Integer.MAX_VALUE);
         int arr[]= new int[10];
         Random r = new Random();
         for (int i = 0; i < arr.length; i++) {
             StringBuilder val = new StringBuilder("1");
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 9; j++) {
                 val.append(r.nextInt(10));
             }
             arr[i]=Integer.valueOf(val.toString());
         }
+
+
         System.out.println(Arrays.toString(arr));
-        arr[0] = 0;
-        arr[1] = 2;
+//        arr[0] = 2;
+//        arr[1] = 0;
         radixSort(arr);
 
         System.out.println(Arrays.toString(arr));
