@@ -1,15 +1,8 @@
 package com.study.algo.tree;
 
-import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 红黑树
@@ -17,12 +10,18 @@ import java.util.stream.Stream;
  * @author ldb
  * @date 2020/08/13
  */
-public class BRTree<T> {
+public class RBTree<T> {
 
     public Node root;
     public Node nul = new Node(null);
     public int size;
 
+    /**
+     * 递归查找
+     * @param t
+     * @param cur
+     * @return
+     */
     public Node find(T t, Node cur) {
         if (cur == null) {
             return null;
@@ -41,6 +40,11 @@ public class BRTree<T> {
         }
     }
 
+    /**
+     * 循环查找
+     * @param t
+     * @return
+     */
     public Node find2(T t) {
         Node cur = root;
         int hash = t.hashCode();
@@ -65,9 +69,9 @@ public class BRTree<T> {
      * 2）如果插入的节点是根节点，那我们直接改变它的颜色，把它变成黑色就可以了。
      * 3）插入结点的父结点为红结点，那么该父结点不可能为根结点，所以插入结点总是存在祖父结点,做平衡调整
      */
-    public void insert(T t) {
+    public boolean insert(T t) {
         if (t == null) {
-            return;
+            return false;
         }
         Node cur = root;
         int hash = t.hashCode();
@@ -76,7 +80,7 @@ public class BRTree<T> {
             root = new Node(Color.BLACK, t);
             ++size;
             setNul(root);
-            return;
+            return true;
         }
         // 33, 16, 50, 15, 19, 17, 25, 27, 34, 58, 51, 66
         while (cur != null) {
@@ -88,7 +92,7 @@ public class BRTree<T> {
                     setNul(node);
                     ++size;
                     balanceInsertion2(cur, node);
-                    return;
+                    return true;
                 }
                 cur = cur.right;
             } else if (cur.value.hashCode() > hash) {
@@ -99,15 +103,16 @@ public class BRTree<T> {
                     setNul(node);
                     ++size;
                     balanceInsertion2(cur, node);
-                    return;
+                    return true;
                 }
                 cur = cur.left;
             } else {
                 // 已存在,不做处理
-                return;
+                return false;
             }
 
         }
+        return false;
     }
 
     // 设置节点子节点为空节点
@@ -202,7 +207,7 @@ public class BRTree<T> {
                     p.color = Color.BLACK;
                     p.left.color = Color.RED;
                     break;
-                } else if (uncle.color == Color.BLACK && p.right == c) {
+                } else if (uncle.color == Color.BLACK && p.left == c) {
                     // 如果关注节点是 cur，它的叔叔节点是黑色，关注节点cur是其父节点的左子节点
                     rotateRight(p, c);
                     p = c;
@@ -294,7 +299,7 @@ public class BRTree<T> {
                     rotateLeft(parent.parent, parent);
                     parent.color = Color.BLACK;
                     parent.left.color = Color.RED;
-                } else if (uncle.color == Color.BLACK && parent.right == cur) {
+                } else if (uncle.color == Color.BLACK && parent.left == cur) {
                     // 如果关注节点是 cur，它的叔叔节点是黑色，关注节点cur是其父节点的左子节点
                     rotateRight(parent, cur);
                     balanceInsertion(cur, cur.right);
@@ -306,38 +311,45 @@ public class BRTree<T> {
     }
 
 
-    private void delete(T t, Node root) {
+    /**
+     * 删除情况跟二叉搜索树类似，只是要做平衡
+     * 1，删除节点有两个非null子节点，找到后继节点。把删除节点的值替换成后继节点的值，删除节点指针指向后继节点。
+     * ----找后继节点的替代节点，有可能为其子节点，那么把后继节点的值改为其子节点的值。删除节点指针指向其子节点。
+     * ----如果后继节点子节点为null ,后继节点就是删除节点。
+     * ----以删除节点为关注节点，进行平衡操作。
+     * 2，删除节点有一个非null子节点，那个删除节点必定是黑色节点，子节点是红色节点。很好操作。
+     * 3，删除节点有两个null子节点，判断是不是根节点。不是根节点，是黑色节点，需要做平衡操作。
+     * @param t
+     */
+    private void delete(T t) {
         Node del = find2(t);
         if (del == null) {
             // 没找到
             return;
         }
         size--;
-        Node tmp = del;
         if (del.left != nul && del.right != nul) {
             // 没有空子节点
             // 找后继节点
             Node successor = findSuccessor(del.right);
             del.value = successor.value;
-            tmp=successor;
-            if (del.right == successor) {
-                if (successor.color==Color.BLACK){
-                    // 可能有一个红节点，或者没有
-                    if (successor.right==nul){
-                        balanceDelete(del, successor);
-                    }else {
-                        successor.value=successor.right.value;
-                        successor.right=nul;
-                    }
-                }else {
-                    del.right = successor.right;
+            // 删除节点变为后继节点
+            del = successor;
+            // 找替换节点
+            Node replaceNode = findReplaceNode(del.right);
+            if (replaceNode == nul) {
+                if (del.color == Color.BLACK) {
+                    balanceDelete(del.parent, del);
                 }
             } else {
-                // 找替换节点
-                Node replaceNode = findReplaceNode(successor);
-                balanceDelete(replaceNode.parent, replaceNode);
+                del.value = replaceNode.value;
+                del = replaceNode;
             }
-
+            if (del.parent.left == del) {
+                del.parent.left = del.left;
+            } else {
+                del.parent.right = del.right;
+            }
         } else if (del.left != nul) {
             // 有右空子节点，黑色,del 只能黑色，del.left 只能红色
             del.value = del.left.value;
@@ -349,28 +361,27 @@ public class BRTree<T> {
         } else {
             // 有两个空子节点
             // 平衡
-            if (del.parent==null){
-                root=null;
-            }else {
-                tmp = del;
-                balanceDelete(del.parent, del);
-            }
-        }
-        if (tmp.parent != null) {
-            if (tmp.parent.left == tmp) {
-                tmp.parent.left = tmp.left;
+            if (del == root) {
+                root = null;
+                return;
             } else {
-                tmp.parent.right = tmp.right;
+                if (del.color == Color.BLACK) {
+                    balanceDelete(del.parent, del);
+                }
+                if (del.parent.left == del) {
+                    del.parent.left = del.left;
+                } else {
+                    del.parent.right = del.right;
+                }
             }
-        }else {
-            root = null;
         }
-
 
     }
 
 
     /**
+     * 4种情况，主要看兄弟节点颜色，进行处理
+     * 判断关注节点不是根节点，为黑色。
      * @param p 父节点
      * @param c 关注节点
      */
@@ -408,7 +419,7 @@ public class BRTree<T> {
             } else {
                 // 兄弟节点
                 Node b = p.left;
-                // 替换结点是其父结点的左子结点
+                // 替换结点是其父结点的右子结点
                 if (b.color == Color.RED) {
                     // 替换结点的兄弟结点是红结点
                     rotateRight(p, b);
@@ -460,7 +471,7 @@ public class BRTree<T> {
 
     // 找替换节点
     private Node findReplaceNode(Node node) {
-        while (node.right != nul) {
+        while (node != nul && node.right != nul) {
             node = node.right;
         }
         return node;
@@ -530,27 +541,28 @@ public class BRTree<T> {
      * @param node
      * @param list
      */
-    private void printTree(Node node, ArrayList<Node> list) {
-        if (node != nul) {
+    private void printTree(Node node, ArrayList<Node> list, HashSet set) {
+        if (node != nul && node != null) {
             list.add(node);
             if (node.left == nul && node.right == nul) {
-                System.out.println(list);
+                long num = list.stream().filter(x -> x.color == Color.BLACK).count();
+//                System.out.println(list + ", " + num);
+                set.add(num);
+//                System.out.println(set.size());
                 return;
             }
-            printTree(node.left, (ArrayList<Node>) list.clone());
-            printTree(node.right, (ArrayList<Node>) list.clone());
+            printTree(node.left, (ArrayList<Node>) list.clone(), set);
+            printTree(node.right, (ArrayList<Node>) list.clone(), set);
         }
 
     }
 
 
-    class Node<T> {
+    static final class Node<T> {
         Node left;
         Node right;
         Node parent;
         Color color;
-        // 额外标记，辅助编程，给一个节点多加一个黑色，true表示有，false表示没有
-        Boolean flag;
         T value;
 
         public Node(Color color, T value) {
@@ -584,7 +596,7 @@ public class BRTree<T> {
      * @param tree
      */
     public void print1(Node tree) {
-        if (tree != nul) {
+        if (tree != nul && tree != null) {
             print1(tree.left);
             System.out.print(tree.value + " ");
             print1(tree.right);
@@ -593,29 +605,96 @@ public class BRTree<T> {
     }
 
     public static void main(String[] args) {
+        RBTree<Integer> tree = new RBTree<>();
+//        for (int i = 1; i < 1000; i++) {
+//            test1(tree,1000);
+//        }
+
+        test1(tree,1000);
+
+
+    }
+
+    /**
+     * 少量数据测试
+     * @param tree
+     */
+    public static void test2(RBTree<Integer> tree) {
         System.out.println("33, 16, 50, 15, 19, 17, 25, 27, 34, 58, 51, 66");
-        BRTree<Integer> tree = new BRTree<>();
         int[] arr = {33, 16, 50, 15, 19, 17, 25, 27, 34, 58, 51, 66};
 
         for (int i = 0; i < arr.length; i++) {
             tree.insert(arr[i]);
         }
-
-        System.out.println("节点个数：" + tree.size);
         tree.print1(tree.root);
         System.out.println();
-//        tree.printTree(tree.root, new ArrayList<>());
-//
-//        System.out.println(tree.find(50, tree.root));
-//        System.out.println(tree.find2(50));
-        tree.delete(19, tree.root);
-        tree.print1(tree.root);
-        System.out.println();
-        tree.printTree(tree.root, new ArrayList<>());
-        tree.delete(58, tree.root);
+        int[] arr2 = {19, 15, 25, 27, 34, 58, 66, 16, 17, 33, 50, 51};
+        for (int i = 0; i < arr2.length; i++) {
+//            System.out.println("删除：" + arr2[i]);
+            tree.delete(arr2[i]);
+//            tree.print1(tree.root);
+//            System.out.println();
+            HashSet sets = new HashSet<>();
+            tree.printTree(tree.root, new ArrayList<>(), sets);
+            System.out.println(sets.size());
+        }
+    }
+
+    /**
+     * 随机数据测试
+     * @param tree
+     * @param size 树有值节点个数
+     */
+    public static void test1(RBTree<Integer> tree, int size) {
+        HashSet<Integer> items = new HashSet<>();
+        Random random = new Random();
+        for (int i = 0; i < size; i++) {
+            int item = random.nextInt(size);
+            items.add(item);
+//            System.out.println(item);
+            tree.insert(item);
+        }
+//        System.out.println("---------" + items.size() + "----" + tree.size + "------------");
+//        AtomicInteger i = new AtomicInteger();
+        items.forEach(x -> {
+//            System.out.println("删除：" + x);
+            tree.delete(x);
+//            i.getAndIncrement();
+//            System.out.println(i.get());
+            HashSet sets = new HashSet<>();
+            tree.printTree(tree.root, new ArrayList<>(), sets);
+//            System.out.println(sets.size());
+            if (sets.size() > 1 || sets.size() == 0) {
+                System.out.println(sets.size());
+            }
+        });
+//        System.out.println("---------" + items.size() + "----------------");
+    }
 
 
+    /**
+     * 依次插入1000个数据，依次删除1000个数据测试
+     * @param tree
+     */
+    public static void test3(RBTree<Integer> tree) {
 
+        int size = 1000;
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = i;
+            System.out.println(i);
+            tree.insert(i);
+        }
+
+        for (int i = 0; i < size; i++) {
+            tree.delete(i);
+            HashSet sets = new HashSet<>();
+            tree.printTree(tree.root, new ArrayList<>(), sets);
+            if (sets.size() > 1 || sets.size() == 0) {
+                System.out.println(sets.size());
+            }
+
+        }
     }
 
 }
