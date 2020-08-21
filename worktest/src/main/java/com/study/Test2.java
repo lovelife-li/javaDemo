@@ -28,6 +28,8 @@ public class Test2 {
         System.out.println(UUID.randomUUID());
         System.out.println(test2());
 
+        System.out.println(0x0100);
+
 
 
     }

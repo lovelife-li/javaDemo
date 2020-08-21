@@ -345,11 +345,7 @@ public class RBTree<T> {
                 del.value = replaceNode.value;
                 del = replaceNode;
             }
-            if (del.parent.left == del) {
-                del.parent.left = del.left;
-            } else {
-                del.parent.right = del.right;
-            }
+            deleteNode(del);
         } else if (del.left != nul) {
             // 有右空子节点，黑色,del 只能黑色，del.left 只能红色
             del.value = del.left.value;
@@ -368,14 +364,18 @@ public class RBTree<T> {
                 if (del.color == Color.BLACK) {
                     balanceDelete(del.parent, del);
                 }
-                if (del.parent.left == del) {
-                    del.parent.left = del.left;
-                } else {
-                    del.parent.right = del.right;
-                }
+                deleteNode(del);
             }
         }
 
+    }
+
+    private void deleteNode(Node del) {
+        if (del.parent.left == del) {
+            del.parent.left = del.left;
+        } else {
+            del.parent.right = del.right;
+        }
     }
 
 
@@ -450,7 +450,6 @@ public class RBTree<T> {
 
             }
         }
-
         c.color = Color.BLACK;
     }
 
@@ -606,9 +605,9 @@ public class RBTree<T> {
 
     public static void main(String[] args) {
         RBTree<Integer> tree = new RBTree<>();
-//        for (int i = 1; i < 1000; i++) {
-//            test1(tree,1000);
-//        }
+        for (int i = 1; i < 10; i++) {
+            test1(tree,1000);
+        }
 
         test1(tree,1000);
 
