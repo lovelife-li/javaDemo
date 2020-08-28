@@ -148,7 +148,7 @@ public class Heap2 {
 
     public static void main(String[] args) {
         Heap2 heap = new Heap2(20);
-        test1(heap);
+        test2(heap);
     }
 
     /**
@@ -176,7 +176,12 @@ public class Heap2 {
         }
         heap.count = arr.length;
         System.out.println(Arrays.toString(heap.a));
-        System.out.println(heap.count);
+        heap.deleteMax();
+        System.out.println(Arrays.toString(heap.a));
+        heap.deleteMax();
+        System.out.println(Arrays.toString(heap.a));
+        heap.deleteMax();
+        System.out.println(Arrays.toString(heap.a));
         heap.deleteMax();
         System.out.println(Arrays.toString(heap.a));
 
