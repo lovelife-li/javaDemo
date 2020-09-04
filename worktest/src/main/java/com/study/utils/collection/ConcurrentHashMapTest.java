@@ -1,4 +1,4 @@
-package com.study.thread.lock;
+package com.study.utils.collection;
 
 import org.junit.Test;
 
@@ -108,7 +108,7 @@ public class ConcurrentHashMapTest {
         });
         System.out.println(x);
         String b = map.computeIfPresent("b", (key, value) -> {
-            System.out.println("=============");
+            System.out.println(key+"============="+value);
             return "world";
         });
         System.out.println(b);
@@ -116,8 +116,25 @@ public class ConcurrentHashMapTest {
         System.out.println(map);
     }
 
+    @Test
     public void TestMap6(){
+        Map<String, String> map = new HashMap<>();
+        map.put("a","A");
+        map.put("b","B");
 
+        // 存在key
+        map.merge("a","AA",(x,y)->{
+            System.out.println(x+","+y);
+            return "AAA";
+        });
+
+        // 不存在key
+        map.merge("c","CC",(x,y)->{
+            System.out.println(x+","+y);
+            return "CCC";
+        });
+
+        System.out.println(map);
     }
 
 }

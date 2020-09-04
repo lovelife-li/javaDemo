@@ -91,13 +91,17 @@ public class Heap {
      *
      * @return
      */
-    public boolean deleteMax() {
+    public int deleteMax() {
         if (count == 0) {
-            return false;
+            return 0;
         }
+        int res = a[1];
         a[1] = a[count--];
-        heapify(a, n, 1);
-        return true;
+        if (count>0){
+            heapify(a, count, 1);
+        }
+
+        return res;
     }
 
     /**
@@ -175,6 +179,13 @@ public class Heap {
 //        System.out.println(Arrays.toString(heap.a));
         heap.insert(8);
         System.out.println(Arrays.toString(heap.a));
+
+        System.out.println();
+        for (;heap.count>0;) {
+
+            System.out.println(heap.deleteMax());
+            System.out.println(Arrays.toString(heap.a));
+        }
 
     }
 
