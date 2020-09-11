@@ -1,5 +1,7 @@
 package com.study.algo.advanced;
 
+import java.util.Arrays;
+
 public class BitMap { // Java 中 char 类型占 16bit，也即是 2 个字节
     private char[] bytes;
     private int nbits;
@@ -28,13 +30,17 @@ public class BitMap { // Java 中 char 类型占 16bit，也即是 2 个字节
     }
 
     public static void main(String[] args) {
-      BitMap bitMap = new BitMap(10);
-      bitMap.set(9);
-      bitMap.set(8);
-      boolean b = bitMap.get(9);
-      System.out.println(b);
-      System.out.println(bitMap.get(6));
-      System.out.println(bitMap.get(8));
+        BitMap bitMap = new BitMap(10);
+        System.out.println(Integer.toBinaryString(bitMap.bytes[0]));
+
+        bitMap.set(9);
+        System.out.println(Integer.toBinaryString(bitMap.bytes[0]));
+        bitMap.set(8);
+        System.out.println(Integer.toBinaryString(bitMap.bytes[0]));
+        boolean b = bitMap.get(9);
+        System.out.println(b);
+        System.out.println(bitMap.get(6));
+        System.out.println(bitMap.get(8));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.study.thread.demo01;
+package com.study.thread.markword;
 
 import org.openjdk.jol.info.ClassLayout;
 

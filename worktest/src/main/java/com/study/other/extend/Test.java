@@ -2,6 +2,10 @@ package com.study.other.extend;
 
 public class Test {
 
+    static {
+        System.out.println("hello");
+    }
+
     static class Father {
         int a = 1;
         public Father() {

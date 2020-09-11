@@ -8,7 +8,7 @@ package com.study.algo.queue;
  * （tail+1)%n = head;
  */
 public class CycleQueue {
-    private int[] arr;
+    public int[] arr;
     // 容量
     public int n;
 
@@ -63,7 +63,7 @@ public class CycleQueue {
     }
 
     public static void main(String[] args) {
-        ArrayQueue q = new ArrayQueue(6);
+        CycleQueue q = new CycleQueue(6);
         q.enqueue(1);
         q.enqueue(2);
         q.enqueue(3);

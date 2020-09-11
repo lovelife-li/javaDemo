@@ -14,6 +14,9 @@ public class Test1 {
     public static void main(String[] args) {
         Son s = new Son();
         System.out.println(s.a);
+        new Test();
+
+//        new Test();
     }
 }
 

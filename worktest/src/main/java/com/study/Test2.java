@@ -13,7 +13,16 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Test2 {
 
+    int a = 2;
+
+    public Test2() {
+        System.out.println(a);
+
+    }
+
     public static void main(String[] args) {
+
+        Test2 ax = new Test2();
 
         if (2 != 2 || 3 == 3 && 1 != 1) {
             System.out.println("hello");
