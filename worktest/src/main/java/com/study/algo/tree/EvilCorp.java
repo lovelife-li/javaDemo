@@ -8,13 +8,17 @@ import java.util.Objects;
 /**
  * @author ldb
  */
-public class ACAutoMata {
+public class EvilCorp {
     private ACNode root;
 
-    public ACAutoMata() {
+    public EvilCorp() {
         this.root = new ACNode("/");
     }
 
+    /**
+     * 插入字符串
+     * @param pattern   字符串
+     */
     private void insert(String pattern) {
         ACNode node = this.root;
         int len = pattern.length();
@@ -30,19 +34,19 @@ public class ACAutoMata {
         node.length = pattern.length();
     }
 
+    /**
+     * 构建失败指针
+     */
     private void buildFailurePointer() {
         ACNode root = this.root;
         LinkedList<ACNode> queue = new LinkedList<>();
         queue.add(root);
-
         while (!queue.isEmpty()) {
             ACNode p = queue.pop();
-
             for (ACNode pc : p.children.values()) {
                 if (Objects.isNull(pc)) {
                     continue;
                 }
-
                 if (p == root) {
                     pc.fail = root;
                 } else {
@@ -64,22 +68,25 @@ public class ACAutoMata {
         }
     }
 
+    /**
+     * 匹配字符串，返回过滤词在字符串中的位置，长度
+     * @param text  字符串
+     * @return  过滤词在字符串中的位置，长度  Map<Integer, Integer>
+     */
     private Map<Integer, Integer> match(String text) {
         ACNode root = this.root;
         ACNode p = root;
-        HashMap<Integer, Integer> res = new HashMap<>();
+        HashMap<Integer, Integer> res = new HashMap<>(16);
         int n = text.length();
         for (int i = 0; i < n; i++) {
             String c = text.charAt(i) + "";
             while (Objects.isNull(p.children.get(c)) && p != root) {
                 p = p.fail;
             }
-
             p = p.children.get(c);
             if (Objects.isNull(p)) {
                 p = root;
             }
-
             ACNode tmp = p;
             while (tmp != root) {
                 if (tmp.isEndingChar == true) {
@@ -94,12 +101,17 @@ public class ACAutoMata {
         return res;
     }
 
+    /**
+     * 返回敏感词在字符串中的位置，长度
+     * @param text  字符串
+     * @param patterns  敏感词数组
+     * @return
+     */
     public static Map<Integer, Integer> match(String text, String[] patterns) {
-        ACAutoMata automata = new ACAutoMata();
+        EvilCorp automata = new EvilCorp();
         for (String pattern : patterns) {
             automata.insert(pattern);
         }
-
         automata.buildFailurePointer();
         return automata.match(text);
     }
@@ -121,8 +133,8 @@ public class ACAutoMata {
     }
 
     public static void main(String[] args) {
-        String[] patterns = {"at", "art", "oars", "soar"};
-        String text = "soarsoars";
+        String[] patterns = {"you", "are", "a", "nice","person"};
+        String text = "nice";
         match(text, patterns);
         String[] patterns2 = {"fuck", "傻逼", "one"};
 

@@ -63,10 +63,10 @@ public class RpcServer {
 		try {
 			Map<String, Object> services = new HashMap<String, Object>();
 			// 获取所有服务类
-			String[] clazzes = clazz.split(",");
+			String[] packages = clazz.split(",");
 			List<Class<?>> classes = new ArrayList<Class<?>>();
-			for(String cl : clazzes){
-				List<Class<?>> classList = getClasses(cl);
+			for(String pkg : packages){
+				List<Class<?>> classList = getClasses(pkg);
 				classes.addAll(classList);
 			}
 			// 循环实例化
@@ -83,7 +83,8 @@ public class RpcServer {
 
 	public static void main(String[] args) {
 		RpcServer rpcServer = new RpcServer();
-		rpcServer.getService("io.netty.example.chapter0.rpc01");
+//		rpcServer.getService("com.study.rpc.demo01");
+		rpcServer.start(9998,"com.study.rpc.demo01");
 	}
 	
 	/**

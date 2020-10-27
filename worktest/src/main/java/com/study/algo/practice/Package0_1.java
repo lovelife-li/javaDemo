@@ -203,14 +203,20 @@ public class Package0_1 {
                     s[i][j] = s[i - 1][j];
                 }
             }
+            print(s);
+            System.out.println("----------------");
             // 从第二个数算价值大小
             for (int j = 0; j <= w - a[i]; j++) {
                 if (s[i - 1][j] >= 0) {
+                    System.out.println(i + ";" + j + ";" + (s[i - 1][j] + "," + v[i] + ",值：" + (s[i - 1][j] + v[i]) + "," + (s[i][j + a[i]])));
                     s[i][j + a[i]] = Math.max(s[i - 1][j] + v[i], s[i][j + a[i]]);
                 }
             }
+            print(s);
+            System.out.println("#################");
 
         }
+
 
         print(s);
 

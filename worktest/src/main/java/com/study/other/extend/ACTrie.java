@@ -1,4 +1,4 @@
-package com.study.algo.tree;
+package com.study.other.extend;
 
 import java.util.LinkedList;
 import java.util.Queue;
