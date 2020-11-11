@@ -5,7 +5,8 @@ import java.util.Random;
 
 /**
  * 堆是要一颗完全叉树
- * 这里做一个大顶堆
+ * 这里做一个大顶堆,数组第一个元素为null.
+ * 如果节点的下标是 i，那左子节点的下标就是 2∗i，右子节点的下标就是 2∗i+1，父节点的下标就是 i/2。
  *
  * @author ldb
  * @date 2020/08/21
@@ -38,7 +39,7 @@ public class Heap {
         }
         a[++count] = data;
         int i = count;
-        while (i >> 1 > 0 && a[i] > a[i >> 1]) {
+        while (i > 1 && a[i] > a[i >> 1]) {
             swap(a, i, i >> 1);
             i >>= 1;
         }
@@ -61,12 +62,16 @@ public class Heap {
 
     /**
      * 从指定下标开始堆化
+     * 使用场景：删除堆顶元素，构建堆。
      *
      * @param a 数组
      * @param n 堆大小
      * @param i 从哪个下标开始堆化
      */
     private void heapify(int[] a, int n, int i) {
+        if (n <= 1) {
+            return;
+        }
         for (; ; ) {
             int pos = i;
             // 与左右子节点比较,找到最大值
@@ -89,7 +94,7 @@ public class Heap {
      * 只能删除堆顶元素
      * 思路：用堆尾元素替换，删除用堆尾元素，从上到下堆化
      *
-     * @return
+     * @return 返回堆顶元素的值
      */
     public int deleteMax() {
         if (count == 0) {
@@ -97,9 +102,8 @@ public class Heap {
         }
         int res = a[1];
         a[1] = a[count--];
-        if (count>0){
-            heapify(a, count, 1);
-        }
+        heapify(a, count, 1);
+
 
         return res;
     }
@@ -113,10 +117,15 @@ public class Heap {
      * @param n 堆中元数个数
      */
     public void createHeap(int[] a, int n) {
+        if (n <= 1) {
+            return;
+        }
         // 怎么找第一个非叶子节点？ 规律：n/2是第一个非叶子节点。
+        // 其实可以看出找最后叶子节点的父节点。最后节点下标：n
         for (int i = n >> 1; i >= 1; --i) {
             heapify(a, n, i);
         }
+
     }
 
     /**
@@ -125,15 +134,17 @@ public class Heap {
      * 1，建堆
      * 2，将第一个元素和最后一个元素交换
      * 注意这里要求，数据第一个元素是空的。
+     * 大顶堆排序，从小到大排，是原地排序。如果从大到小排
      *
      * @param a
-     * @param n n表示数组元素个数
+     * @param n n表示数组元素个数，不是数组大小
      */
     public void sort(int[] a, int n) {
         if (n > a.length - 1) {
             return;
         }
         createHeap(a, n);
+        // i表示元素个数
         int i = n;
         while (i > 1) {
             swap(a, 1, i);
@@ -146,18 +157,20 @@ public class Heap {
 
     public static void main(String[] args) {
         Heap heap = new Heap(20);
-        test2(heap);
+        test1(heap);
+
     }
+
 
     /**
      * 测试排序
      */
     public static void test1(Heap heap) {
         Random random = new Random();
-        int size = 20;
+        int size = 10;
         int arr[] = new int[size + 1];
         for (int i = 1; i <= size; i++) {
-            arr[i] = random.nextInt(size);
+            arr[i] = random.nextInt(100);
         }
         System.out.println(Arrays.toString(arr));
         heap.sort(arr, size);
@@ -168,9 +181,9 @@ public class Heap {
      * 测试插入
      */
     public static void test2(Heap heap) {
-        int arr[] = {33,17,21,16,13,15,9,5,6,7,8,1,2};
+        int arr[] = {33, 17, 21, 16, 13, 15, 9, 5, 6, 7, 8, 1, 2};
         for (int i = 0; i < arr.length; i++) {
-            heap.a[i+1] = arr[i];
+            heap.a[i + 1] = arr[i];
         }
         heap.count = arr.length;
         System.out.println(Arrays.toString(heap.a));
@@ -181,7 +194,7 @@ public class Heap {
         System.out.println(Arrays.toString(heap.a));
 
         System.out.println();
-        for (;heap.count>0;) {
+        for (; heap.count > 0; ) {
 
             System.out.println(heap.deleteMax());
             System.out.println(Arrays.toString(heap.a));

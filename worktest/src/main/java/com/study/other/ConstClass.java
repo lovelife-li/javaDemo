@@ -6,4 +6,7 @@ public class ConstClass {
     }
 
     public static final String HELLOWORLD = "hello world";
+
+    public void test2(){}
+
 }

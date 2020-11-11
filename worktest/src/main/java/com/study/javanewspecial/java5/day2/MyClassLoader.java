@@ -44,7 +44,7 @@ public class MyClassLoader extends ClassLoader {
         try {
             InputStream is = new FileInputStream(classFileName);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bos.write(is.readAllBytes());
+//            bos.write(is.readAllBytes());
             byte[] b = bos.toByteArray();
             bos.close();
             is.close();

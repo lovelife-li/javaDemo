@@ -93,12 +93,12 @@ public class Solution {
 
     public static long get2(double n){
 
-        double d =  1.0/Math.sqrt(5)*( Math.pow((1+Math.sqrt(5.0d))/2.0,n)-Math.pow((1-Math.sqrt(5.0d))/2.0,n));
-        BigDecimal x1 = new BigDecimal(1);
-        BigDecimal sqrt = new BigDecimal(5).sqrt(MathContext.DECIMAL128);
-        x1.divide(sqrt,MathContext.DECIMAL128).doubleValue();
-
-        System.out.println( x1.divide(sqrt,MathContext.DECIMAL128).doubleValue());
+//        double d =  1.0/Math.sqrt(5)*( Math.pow((1+Math.sqrt(5.0d))/2.0,n)-Math.pow((1-Math.sqrt(5.0d))/2.0,n));
+//        BigDecimal x1 = new BigDecimal(1);
+//        BigDecimal sqrt = new BigDecimal(5).sqrt(MathContext.DECIMAL128);
+//        x1.divide(sqrt,MathContext.DECIMAL128).doubleValue();
+//
+//        System.out.println( x1.divide(sqrt,MathContext.DECIMAL128).doubleValue());
 
         return 1;
     }

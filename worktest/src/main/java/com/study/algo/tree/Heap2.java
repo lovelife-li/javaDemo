@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * 堆是要一颗完全叉树
- * 这里做一个大顶堆
+ * 这里做一个大顶堆,数组第一个元素为不为null.
  * 如果节点的下标是 i，那左子节点的下标就是 2∗i+1，右子节点的下标就是 2∗i+2，父节点的下标就是 (i−1)/2。
  *
  * @author ldb
@@ -39,10 +39,11 @@ public class Heap2 {
         }
         a[count] = data;
         int i = count;
-        while (a[(i - 1) / 2] > 0 && a[i] > a[(i - 1) / 2]) {
+        while (i > 0 && a[i] > a[(i - 1) / 2]) {
             swap(a, i, (i - 1) / 2);
             i = (i - 1) / 2;
         }
+        ++count;
         return true;
     }
 
@@ -97,7 +98,10 @@ public class Heap2 {
             return false;
         }
         a[0] = a[--count];
-        heapify(a, n, 0);
+        if (count > 1) {
+            heapify(a, count, 0);
+        }
+
         return true;
     }
 
@@ -114,10 +118,13 @@ public class Heap2 {
             return false;
         }
         // 怎么找第一个非叶子节点？ 规律：n/2是第一个非叶子节点。
-        int i = (n - 2) / 2;
-        for (; i >= 0; --i) {
-            heapify(a, n, i);
+        // 其实可以看出找最后叶子节点的父节点。最后节点下标：n-1
+        if (n > 1) {
+            for (int i = (n - 2) / 2; i >= 0; --i) {
+                heapify(a, n, i);
+            }
         }
+
         return true;
     }
 
@@ -148,7 +155,12 @@ public class Heap2 {
 
     public static void main(String[] args) {
         Heap2 heap = new Heap2(20);
-        test2(heap);
+        heap.insert(-1);
+        heap.insert(-2);
+        heap.insert(1);
+        heap.insert(2);
+        System.out.println(Arrays.toString(heap.a));
+//        test2(heap);
     }
 
     /**

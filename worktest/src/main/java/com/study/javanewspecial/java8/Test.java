@@ -1,12 +1,13 @@
 package com.study.javanewspecial.java8;
 
-import java.sql.SQLOutput;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author ldb
  * @date 2020-03-15 13:08
  * @dsscription
  */
+@Slf4j
 public class Test {
     /**
      * 最大的容量为2的30次方
@@ -16,9 +17,19 @@ public class Test {
         System.out.println(2^20);
 
         System.out.println(tableSizeFor(23));
+        t();
 
 
 
+    }
+
+    public static void t(){
+        try {
+            int i = 9/0;
+        } catch (Exception e) {
+           log.error("异常：{}",e.getMessage());
+            log.error("异常：",e);
+        }
 
     }
 

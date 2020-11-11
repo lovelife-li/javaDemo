@@ -15,7 +15,7 @@ import java.security.PrivilegedExceptionAction;
 public class UnSaveTest {
     public static void main(String[] args) {
 
-        PrivilegedExceptionAction<Unsafe> action = new PrivilegedExceptionAction<>() {
+        PrivilegedExceptionAction<Unsafe> action = new PrivilegedExceptionAction<Unsafe>() {
             @Override
             public Unsafe run() throws Exception {
                 Field field = Unsafe.class.getDeclaredField("theUnsafe");

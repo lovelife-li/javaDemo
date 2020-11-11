@@ -28,9 +28,16 @@ public class Test2 {
 
     }
 
+    public static void register(){
+        throw new RuntimeException("xx");
+    }
+
     public static void main(String[] args) {
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
         System.out.println(list.get(0));
+
+        register();
+
     }
 }

@@ -13,53 +13,56 @@ import java.util.Map;
 public class ConcurrentHashMapTest {
 
     /**
-     * put返回旧值，如果没有则返回null
+     * put已经存在的值，返回旧值
+     * put已经不存在的值，返回null
      */
     @Test
     public void testMap1() {
         Map<String, String> map = new HashMap<>();
-        map.put("a","A");
-        map.put("b","B");
-        String v = map.put("b","v"); // 输出 B
+        map.put("a", "A");
+        map.put("b", "B");
+        String v = map.put("b", "v"); // 输出 B
         System.out.println(v);
-        String v1 = map.put("c","v");
+        String v1 = map.put("c", "v");
         System.out.println(v1); // 输出：NULL
     }
 
     /**
-     * compute（相当于put,只不过返回的是新值）
-     * compute：返回新值
-     *
+     * compute,put增强，通过一个函数（key,oldValue)计算value值。
+     * compute：返回函数计算的值。
      */
     @Test
     public void testMap2() {
         Map<String, String> map = new HashMap<>();
         map.put("a", "A");
         map.put("b", "B");
-        String val = map.compute("b", (k, v) -> "v"); // 输出 v
-        System.out.println(val);
+        String val = map.compute("b", (k, v) -> {
+            System.out.println("k=" + k + ",v=" + v);
+            return "v";
+        });
+        System.out.println(val); // 输出 v
         String v1 = map.compute("c", (k, v) -> "v"); // 输出 v
         System.out.println(v1);
-        String v2 = map.compute("d",(key,oldValue)->{
-            System.out.println(key+","+oldValue);
+        String v2 = map.compute("d", (key, oldValue) -> {
+            System.out.println(key + "," + oldValue);
             return "dd";
         });
-        System.out.println(v2);
+        System.out.println(v2); // 输出 dd
         System.out.println(map);
     }
 
     /**
-     * putIfAbsent返回旧值，如果没有则返回null
-     * 指定key的value不存在，就put.存在，就什么也不做
+     * putIfAbsent返回值跟put 一样
+     * 指定key不存在，就put.存在，就什么也不做
      */
     @Test
     public void testMap3() {
         Map<String, String> map = new HashMap<>();
-        map.put("a","A");
-        map.put("b","B");
-        String v = map.putIfAbsent("b","v");  // 输出 B
+        map.put("a", "A");
+        map.put("b", "B");
+        String v = map.putIfAbsent("b", "v");  // 输出 B
         System.out.println(v);
-        String v1 = map.putIfAbsent("c","v");  // 输出 null
+        String v1 = map.putIfAbsent("c", "v");  // 输出 null
         System.out.println(v1);
         System.out.println(map);
 
@@ -67,23 +70,23 @@ public class ConcurrentHashMapTest {
 
     /**
      * computeIfAbsent:存在时返回存在的值，不存在时返回新值
-     *  如果缺席，才设置值。返回该值。
-     *  如果不缺席，什么也不做。返回该值。
-     *  参数为：key，value计算方法
-     *  当key不存在时，执行value计算方法，计算value
+     * 如果缺席，才设置值。返回该值。
+     * 如果不缺席，什么也不做。返回该值。
+     * 参数为：key，value计算方法
+     * 当key不存在时，执行value计算方法，计算value
      */
     @Test
     public void testMap4() {
         Map<String, String> map = new HashMap<>();
-        map.put("a","A");
-        map.put("b","B");
-        String v = map.computeIfAbsent("b",k->{
-            System.out.println("==========");
+        map.put("a", "A");
+        map.put("b", "B");
+        String v = map.computeIfAbsent("b", k -> {
+            System.out.println("==========" + k);
             return "abc";
         });  // 输出 B
         System.out.println(v);
-        String v1 = map.computeIfAbsent("c",k->{
-            System.out.println("----key:"+k);
+        String v1 = map.computeIfAbsent("c", k -> {
+            System.out.println("----key:" + k);
             return "v";
         }); // 输出 v
         System.out.println(v1);
@@ -100,15 +103,15 @@ public class ConcurrentHashMapTest {
     @Test
     public void testMap5() {
         Map<String, String> map = new HashMap<>();
-        map.put("a","A");
-        map.put("b","B");
+        map.put("a", "A");
+        map.put("b", "B");
         String x = map.computeIfPresent("f", (key, value) -> {
             System.out.println("=============");
             return "world";
         });
         System.out.println(x);
         String b = map.computeIfPresent("b", (key, value) -> {
-            System.out.println(key+"============="+value);
+            System.out.println(key + "=============" + value);
             return "world";
         });
         System.out.println(b);
@@ -117,20 +120,20 @@ public class ConcurrentHashMapTest {
     }
 
     @Test
-    public void TestMap6(){
+    public void TestMap6() {
         Map<String, String> map = new HashMap<>();
-        map.put("a","A");
-        map.put("b","B");
+        map.put("a", "A");
+        map.put("b", "B");
 
         // 存在key
-        map.merge("a","AA",(x,y)->{
-            System.out.println(x+","+y);
+        map.merge("a", "AA", (x, y) -> {
+            System.out.println(x + "," + y);
             return "AAA";
         });
 
         // 不存在key
-        map.merge("c","CC",(x,y)->{
-            System.out.println(x+","+y);
+        map.merge("c", "CC", (x, y) -> {
+            System.out.println(x + "," + y);
             return "CCC";
         });
 
