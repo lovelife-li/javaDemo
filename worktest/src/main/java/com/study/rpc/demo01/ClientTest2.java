@@ -2,7 +2,7 @@ package com.study.rpc.demo01;
 
 import org.junit.Test;
 
-public class ClientTest {
+public class ClientTest2 {
 	
 	@Test
 	public void test() {
@@ -13,7 +13,7 @@ public class ClientTest {
 		System.out.println(service.getInfo());
 		
 		Student student = new Student();
-		student.setAge(23);
+		student.setAge(24);
 		student.setName("hashmap");
 		student.setSex("男");
 		System.out.println(service.printInfo(student));

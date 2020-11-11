@@ -1,8 +1,6 @@
 package com.study;
 
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -23,25 +21,53 @@ public class Test2 {
     public static void main(String[] args) {
 
         Test2 ax = new Test2();
+        Object obj1 = new Object();
+        Object obj2 = new Object();
 
-        if (2 != 2 || 3 == 3 && 1 != 1) {
-            System.out.println("hello");
+
+        ArrayList<Integer> al = new ArrayList<>();
+        al.add(1);
+        Integer[] arr = al.toArray(new Integer[0]);
+        System.out.println(Arrays.toString(arr));
+
+
+//        if (2 != 2 || 3 == 3 && 1 != 1) {
+//            System.out.println("hello");
+//        }
+//
+//        System.out.println(-20>>2); // -5
+//        System.out.println(-20>>>2); // 1073741819
+//
+//        System.out.println(Integer.toBinaryString(-1));
+//        System.out.println(Integer.toBinaryString(1));
+//        System.out.println(Integer.toBinaryString(2));
+//        System.out.println(Integer.toBinaryString(-1<<14));
+//        System.out.println(-1<<14);
+
+        HashMap<Integer, Integer> map = new HashMap<>(16);
+        for (int i = 0; i < 64; i++) {
+            map.put(i, i);
         }
-
-        System.out.println(-20>>2); // -5
-        System.out.println(-20>>>2); // 1073741819
-
-        System.out.println(Integer.toBinaryString(-1));
-        System.out.println(Integer.toBinaryString(1));
-        System.out.println(Integer.toBinaryString(2));
-        System.out.println(Integer.toBinaryString(-1<<14));
-        System.out.println(-1<<14);
 
         System.out.println(UUID.randomUUID());
         System.out.println(test2());
 
         System.out.println(0x0100);
 
+        System.out.println("n:");
+        int n = 4;
+        n |= n >>> 1;
+        System.out.println(n);
+        n |= n >>> 2;
+        System.out.println(n);
+        n |= n >>> 4;
+        System.out.println(n);
+        n |= n >>> 8;
+        System.out.println(n);
+        n |= n >>> 16;
+        System.out.println(n);
+        n = (n + 1) << 1;
+        System.out.println(n);
 
         PriorityQueue<Integer> p = new PriorityQueue<>();
         p.offer(1);
@@ -83,14 +109,14 @@ public class Test2 {
         throw new RuntimeException();
     }
 
-    public static int test2(){
+    public static int test2() {
 
         ReentrantLock lock = new ReentrantLock(true);
         lock.tryLock();
 
         try {
             return 1;
-        }finally {
+        } finally {
             System.out.println("222");
         }
     }
