@@ -117,14 +117,17 @@ public class Heap {
      * @param n 堆中元数个数
      */
     public void createHeap(int[] a, int n) {
-        if (n <= 1) {
+        if (n > a.length - 1) {
             return;
         }
         // 怎么找第一个非叶子节点？ 规律：n/2是第一个非叶子节点。
         // 其实可以看出找最后叶子节点的父节点。最后节点下标：n
-        for (int i = n >> 1; i >= 1; --i) {
-            heapify(a, n, i);
+        if (n > 1) {
+            for (int i = n >> 1; i >= 1; --i) {
+                heapify(a, n, i);
+            }
         }
+
 
     }
 
@@ -134,17 +137,18 @@ public class Heap {
      * 1，建堆
      * 2，将第一个元素和最后一个元素交换
      * 注意这里要求，数据第一个元素是空的。
-     * 大顶堆排序，从小到大排，是原地排序。如果从大到小排
+     * 大顶堆排序，从小到大排，是原地排序。如果从大到小排就不是原地排序。
+     * 小顶堆排序，从大到小排，是原地排序。如果从小到大排就不是原地排序。
      *
      * @param a
-     * @param n n表示数组元素个数，不是数组大小
+     * @param n n表示堆元素个数
      */
     public void sort(int[] a, int n) {
         if (n > a.length - 1) {
             return;
         }
         createHeap(a, n);
-        // i表示元素个数
+        // i表示堆元素最大下标
         int i = n;
         while (i > 1) {
             swap(a, 1, i);

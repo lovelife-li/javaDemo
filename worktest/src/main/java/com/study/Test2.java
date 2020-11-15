@@ -1,7 +1,6 @@
 package com.study;
 
 import java.util.*;
-import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -19,6 +18,11 @@ public class Test2 {
     }
 
     public static void main(String[] args) {
+        ArrayList<Integer> b = new ArrayList<>();
+        b.add(new Integer(788));
+        b.add(new Integer(789));
+        System.out.println("xx:" + b.contains(new Integer(789)));
+
 
         Test2 ax = new Test2();
         Object obj1 = new Object();
@@ -81,27 +85,27 @@ public class Test2 {
 
         Integer.toBinaryString(2);
 
-        System.out.println((-3&0xFF));
-        System.out.println((128&0xFF));
+        System.out.println((-3 & 0xFF));
+        System.out.println((128 & 0xFF));
         System.out.println(-127);
-        System.out.println((1-0.9));
+        System.out.println((1 - 0.9));
 
         byte[] a = new byte[10];
-        a[0]= -127;
+        a[0] = -127;
         System.out.println(a[0]);
-        int c = a[0]&0xff;
+        int c = a[0] & 0xff;
         System.out.println(c);
 
 //        Executors.newScheduledThreadPool()
 //        Executors.newWorkStealingPool()
     }
 
-    public static byte[] intToByte(int n){
+    public static byte[] intToByte(int n) {
         return new byte[]{
-                (byte)((n>>24)&0xff),
-                (byte)((n>>16)&0xff),
-                (byte)((n>>8)&0xff),
-                (byte)(n&0xff)
+                (byte) ((n >> 24) & 0xff),
+                (byte) ((n >> 16) & 0xff),
+                (byte) ((n >> 8) & 0xff),
+                (byte) (n & 0xff)
         };
     }
 

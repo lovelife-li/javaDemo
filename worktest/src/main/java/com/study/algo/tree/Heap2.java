@@ -1,5 +1,6 @@
 package com.study.algo.tree;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -69,6 +70,9 @@ public class Heap2 {
      * @param i 从哪个下标开始堆化
      */
     private void heapify(int[] a, int n, int i) {
+        if (n <= 1) {
+            return;
+        }
         for (; ; ) {
             int pos = i;
             // 与左右子节点比较,找到最大值
@@ -98,10 +102,7 @@ public class Heap2 {
             return false;
         }
         a[0] = a[--count];
-        if (count > 1) {
-            heapify(a, count, 0);
-        }
-
+        heapify(a, count, 0);
         return true;
     }
 
@@ -138,11 +139,14 @@ public class Heap2 {
      * @param n n表示数组元素个数
      */
     public void sort(int[] a, int n) {
-
+        if (n > a.length) {
+            return;
+        }
         if (!createHeap(a, n)) {
             return;
         }
         System.out.println(Arrays.toString(a));
+        // i表示堆元素最大下标
         int i = --n;
         while (i > 0) {
             swap(a, 0, i);
@@ -154,13 +158,8 @@ public class Heap2 {
     }
 
     public static void main(String[] args) {
-        Heap2 heap = new Heap2(20);
-        heap.insert(-1);
-        heap.insert(-2);
-        heap.insert(1);
-        heap.insert(2);
-        System.out.println(Arrays.toString(heap.a));
-//        test2(heap);
+        Heap2 heap = new Heap2(10);
+        test2(heap);
     }
 
     /**
@@ -168,10 +167,10 @@ public class Heap2 {
      */
     public static void test1(Heap2 heap) {
         Random random = new Random();
-        int size = 20;
+        int size = heap.n;
         int arr[] = new int[size];
         for (int i = 0; i < size; i++) {
-            arr[i] = random.nextInt(100);
+            arr[i] = random.nextInt(1000);
         }
         System.out.println(Arrays.toString(arr));
         heap.sort(arr, size);
@@ -184,9 +183,8 @@ public class Heap2 {
     public static void test2(Heap2 heap) {
         int arr[] = {33, 17, 21, 16, 13, 15, 9, 5, 6, 7, 8, 1, 2};
         for (int i = 0; i < arr.length; i++) {
-            heap.a[i] = arr[i];
+            heap.insert(arr[i]);
         }
-        heap.count = arr.length;
         System.out.println(Arrays.toString(heap.a));
         heap.deleteMax();
         System.out.println(Arrays.toString(heap.a));
@@ -196,6 +194,14 @@ public class Heap2 {
         System.out.println(Arrays.toString(heap.a));
         heap.deleteMax();
         System.out.println(Arrays.toString(heap.a));
+
+        System.out.println(BigDecimal.ZERO.equals(new BigDecimal("0.00")));
+
+        double inf = Double.POSITIVE_INFINITY;
+        System.out.println((inf+1)==inf);
+
+        System.out.println(Math.round(-3.7f));
+
 
 
     }
