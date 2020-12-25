@@ -1,13 +1,9 @@
 package com.study.utils.web;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwsHeader;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
+import org.junit.Test;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -38,7 +34,7 @@ public class TestJwt {
          * eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb2UifQ.vfCEOpcOxPvRfZfBkbbV7msy3catk-IGaRcp6Omwoig
          */
 
-        String jws = Jwts.builder().setSubject("Joe").signWith(key,SignatureAlgorithm.HS256).compact();
+        String jws = Jwts.builder().setSubject("Joexxxx").signWith(key,SignatureAlgorithm.HS256).compact();
         System.out.println(jws);
 
         String subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jws).getBody().getSubject();
@@ -47,11 +43,12 @@ public class TestJwt {
 
     }
 
-    public void test(){
+    @Test
+    public void test1(){
         String sharedTokenSecret="hellooauthhellooauthhellooauthhellooauth";//密钥
         Key key = new SecretKeySpec(sharedTokenSecret.getBytes(),
                 SignatureAlgorithm.HS256.getJcaName());
-        //生成JWT令牌
+//        //生成JWT令牌
 //        String jwts=
 //                Jwts.builder().setHeaderParams(headerMap).setClaims(payloadMap).signWith(key,
 //                        SignatureAlgorithm.HS256).compact();

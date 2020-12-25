@@ -20,4 +20,6 @@ public class User {
     private String wechat;
 
     private String qq;
+
+    private Long id;
 }

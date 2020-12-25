@@ -28,11 +28,11 @@ public class TestListToMap {
 //        System.out.println(stringStringMap);
 //        Map<Integer, Book> integerBookMap = listToMapWithDupKeyError(bookList);
 //        System.out.println(integerBookMap);
-//        Map<Integer, Book> integerBookMap1 = listToMapWithDupKey2(bookList);
-//        System.out.println(integerBookMap1);
+        Map<Integer, Book> integerBookMap1 = listToMapWithDupKey2(bookList);
+        System.out.println(integerBookMap1);
 //
-        Map<Integer, String> stringMap = listToMapWithDupKeyError2(bookList);
-        System.out.println(stringMap);
+//        Map<Integer, String> stringMap = listToMapWithDupKeyError2(bookList);
+//        System.out.println(stringMap);
     }
 
     public Map<String, String> listToMap(List<Book> books) {
@@ -60,10 +60,10 @@ public class TestListToMap {
     // 一个是之前的value,一个是重复key的value
     public Map<Integer, Book> listToMapWithDupKey2(List<Book> books) {
         return books.stream().collect(Collectors.toMap(Book::getReleaseYear, Function.identity(),
-                (existing, replacement) -> {
-                    System.out.println(existing);
-                    System.out.println(replacement);
-                    return existing;
+                (value1, value2) -> {
+                    System.out.println("value1:"+value1);
+                    System.out.println("value2:"+value2);
+                    return value1;
                 }));
     }
 

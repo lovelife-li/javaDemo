@@ -1,10 +1,11 @@
 package com.study.javanewspecial.java8.demo02.reduce;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import com.study.utils.web.User;
+import org.junit.Test;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * todo
@@ -28,5 +29,21 @@ public class ReduceTest {
 
         System.out.println(UUID.randomUUID().toString());
 
+    }
+    @Test
+    public void test01(){
+        ArrayList<User> users = new ArrayList<>();
+        Long id = users.stream().map(User::getId).min(Long::compareTo).orElse(0L);
+        System.out.println(id);
+
+        Set<Integer> sets = IntStream.of(16, 32, 64, 256).boxed().collect(Collectors.toSet());
+        Integer a1 = new Integer(16);
+        Integer a2 = new Integer(32);
+        Integer a3 = new Integer(64);
+        Integer a4 = new Integer(256);
+        System.out.println(sets.contains(a1));
+        System.out.println(sets.contains(a2));
+        System.out.println(sets.contains(a3));
+        System.out.println(sets.contains(a4));
     }
 }

@@ -140,4 +140,10 @@ public class ConcurrentHashMapTest {
         System.out.println(map);
     }
 
+    @Test
+    public void test7(){
+        HashMap<String, String> map = new HashMap<>();
+        System.out.println(map.get("abc"));
+    }
+
 }
