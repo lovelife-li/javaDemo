@@ -27,7 +27,7 @@ public class ConsumerInOrder {
        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 
        consumer.subscribe("TopicTest", "TagA || TagC || TagD");
-
+       consumer.setConsumeThreadMax(8);
        consumer.registerMessageListener(new MessageListenerOrderly() {
 
            Random random = new Random();
@@ -39,7 +39,6 @@ public class ConsumerInOrder {
                    // 可以看到每个queue有唯一的consume线程来消费, 订单对每个queue(分区)有序
                    System.out.println("consumeThread=" + Thread.currentThread().getName() + "queueId=" + msg.getQueueId() + ", content:" + new String(msg.getBody()));
                }
-
                try {
                    //模拟业务逻辑处理中...
                    TimeUnit.SECONDS.sleep(random.nextInt(10));

@@ -63,9 +63,9 @@ public class AtomicStampedReferenceTest {
             @Override
             public void run() {
                 int stamp = atomicStampedReference.getStamp();
-
+                System.out.println(stamp);
                 try {
-                    TimeUnit.SECONDS.sleep(2);      //线程tsf1执行完
+                    TimeUnit.SECONDS.sleep(4);      //线程tsf1执行完
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

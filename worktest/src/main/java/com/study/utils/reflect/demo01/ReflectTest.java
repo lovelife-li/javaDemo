@@ -78,6 +78,13 @@ public class ReflectTest {
             System.out.println(constructor.toString());//public com.ys.reflex.Person()
         }
 
+        System.out.println("--------------");
+        System.out.println(Person.class.getSigners());
+        System.out.println(Person.class.getSuperclass());
+        System.out.println(Object.class.getSuperclass());
+        System.out.println(Person.class.getSimpleName());
+        System.out.println(Person.class.getName());
+        System.out.println(Person.class.getGenericSuperclass());
 
     }
 }

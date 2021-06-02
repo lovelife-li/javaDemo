@@ -11,15 +11,11 @@ public class TestForkJoin {
 	@Test
 	public void test1(){
 		long start = System.currentTimeMillis();
-		
 		ForkJoinPool pool = new ForkJoinPool();
-		ForkJoinTask<Long> task = new ForkJoinCalculate(0L, 10000000000L);
-		
+		ForkJoinTask<Long> task = new ForkJoinCalculate(0L, 10000000L);
 		long sum = pool.invoke(task);
 		System.out.println(sum);
-		
 		long end = System.currentTimeMillis();
-		
 		System.out.println("耗费的时间为: " + (end - start)); //112-1953-1988-2654-2647-20663-113808
 	}
 	

@@ -1,8 +1,13 @@
 package com.study.utils.reflect.demo01;
 
-public class Person {
+public class Person extends Parent{
     //私有属性
     private String name = "Tom";
+
+    protected int hobby;
+
+    String address;
+
     //公有属性
     public int age = 18;
 

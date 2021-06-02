@@ -13,5 +13,7 @@ public class Test {
         for (int i = 0; i < 32; i++) {
             map.put(i,i);
         }
+        System.out.println(new String("字").getBytes().length);
+        System.out.println("a".getBytes().length);
     }
 }

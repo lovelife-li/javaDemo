@@ -1,7 +1,10 @@
 package com.study.utils.reflect.demo01;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Field;
 
+@Slf4j
 public class ReflectTest2 {
     @org.junit.Test
     public void testGetParentField() throws Exception {
@@ -24,11 +27,14 @@ public class ReflectTest2 {
             try {
                 field = c.getDeclaredField(fieldName);
                 field.setAccessible(true);
+//                int i=9/0;
                 return field;
             } catch (Exception e) {
                 //这里甚么都不要做！并且这里的异常必须这样写，不能抛出去。
                 //如果这里的异常打印或者往外抛，则就不会执行c = c.getSuperclass(),最后就不会进入到父类中了
                 System.out.println("xxx:"+e.getMessage());
+                log.info("exception:",e);
+
             }
         }
         return null;

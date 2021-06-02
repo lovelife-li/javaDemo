@@ -8,6 +8,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * todo
@@ -34,7 +36,8 @@ public class JwtUtils {
     /**
      * jwt生存时间 30 分钟
      */
-    public static final long TTL = 30 * 60 * 1000;
+    public static final long TTL1 = 30 * 60 * 1000;
+    public static final long TTL = 6 * 1000;
 
     public static final String ISSUSER = "ldb";
 
@@ -49,9 +52,8 @@ public class JwtUtils {
      */
     public static String createJWT(Map<String, Object> headerMap, Map<String, String> payloadMap) {
         //生成JWT令牌
-        String jwts =
-                Jwts.builder().setHeaderParams(headerMap).setClaims(payloadMap).signWith(getKey(),
-                        SignatureAlgorithm.HS256).compact();
+        String jwts = Jwts.builder().setHeaderParams(headerMap).setClaims(payloadMap)
+                .signWith(getKey(), SignatureAlgorithm.HS256).compact();
         return jwts;
     }
 
@@ -59,8 +61,7 @@ public class JwtUtils {
         long now = System.currentTimeMillis();
         log.info("{}", now);
         //生成JWT令牌
-        String jwts =
-                Jwts.builder()
+        String jwts = Jwts.builder()
                         .setClaims(payloadMap)
                         .setId(UUID.randomUUID().toString())
                         .setHeaderParam("typ", "JWT")
@@ -95,7 +96,6 @@ public class JwtUtils {
 
     public static void parseHeaer(String jwts) {
         Jws<Claims> claimsJws = parseJWT(jwts);
-
         System.out.println(claimsJws.getHeader().get("a"));
     }
 
@@ -109,7 +109,7 @@ public class JwtUtils {
 
     public static void main(String[] args) {
         Map<String, Object> headerMap = new HashMap<>();
-        headerMap.put("a", "123");
+        headerMap.put("a", "abccdee");
         Map<String, String> payloadMap = new HashMap<>();
         payloadMap.put("nickname", "xiaoxiao");
         payloadMap.put("age", "26");
@@ -117,9 +117,18 @@ public class JwtUtils {
 
         String jwt2 = createJWT(payloadMap);
         System.out.println("jwt:" + jwt2);
-//        parseHeaer(jwt2);
+        parseHeaer(jwt2);
         System.out.println("-------------------------------");
         parseBody(jwt2);
+
+        for (long i = 1; i < 10; i++) {
+            try {
+                TimeUnit.SECONDS.sleep(2L);
+                parseBody(jwt2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
 
     }

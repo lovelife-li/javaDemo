@@ -6,13 +6,7 @@ import java.util.Date;
 
 public class DateFormatThreadLocal {
 	
-	private static final ThreadLocal<SimpleDateFormat> df = new ThreadLocal<SimpleDateFormat>(){
-		
-		protected SimpleDateFormat initialValue(){
-			return new SimpleDateFormat();
-		}
-		
-	};
+	private static final ThreadLocal<SimpleDateFormat> df = ThreadLocal.withInitial(() -> new SimpleDateFormat());
 	
 	public static final Date convert(String source) throws ParseException{
 		return df.get().parse(source);

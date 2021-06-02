@@ -11,57 +11,63 @@
             <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
         </console>
 
-        <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
-<!--        <RollingFile name="RollingFileInfo" fileName="./logs/${sys:log.path}/info.log"-->
-<!--                     filePattern="./logs/${sys:log.path}/info-%d{yyyy-MM-dd}-%i.log">-->
-<!--            &lt;!&ndash;控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） &ndash;&gt;-->
-<!--            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />-->
-<!--            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n" />-->
-<!--            <Policies>-->
-<!--                <TimeBasedTriggeringPolicy />-->
-<!--                <SizeBasedTriggeringPolicy size="100 MB" />-->
-<!--            </Policies>-->
-<!--        </RollingFile>-->
+<!--        <RocketMQ name="rocketmqAppender" producerGroup="myProducerGroup1" nameServerAddress="localhost:9876"-->
+<!--                  topic="TopicTest" tag="*">-->
+<!--            <PatternLayout pattern="%d [%p] - %l %c %m%n"/>-->
+<!--        </RocketMQ>-->
+<!--         这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+<!--                <RollingFile name="RollingFileInfo" fileName="./logs/${sys:log.path}/info.log"-->
+<!--                             filePattern="./logs/${sys:log.path}/info-%d{yyyy-MM-dd}-%i.log">-->
+<!--                    &lt;!&ndash;控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） &ndash;&gt;-->
+<!--                    <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />-->
+<!--                    <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n" />-->
+<!--                    <Policies>-->
+<!--                        <TimeBasedTriggeringPolicy />-->
+<!--                        <SizeBasedTriggeringPolicy size="100 MB" />-->
+<!--                    </Policies>-->
+<!--                </RollingFile>-->
 
 
-<!--        <RollingFile name="RollingFileError" fileName="./logs/${sys:log.path}/error.log"-->
-<!--                     filePattern="./logs/${sys:log.path}/error-%d{yyyy-MM-dd}-%i.log">-->
-<!--            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />-->
-<!--            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n" />-->
-<!--            <Policies>-->
-<!--                <TimeBasedTriggeringPolicy />-->
-<!--                <SizeBasedTriggeringPolicy size="100 MB" />-->
-<!--            </Policies>-->
-<!--        </RollingFile>-->
+<!--                <RollingFile name="RollingFileError" fileName="./logs/${sys:log.path}/error.log"-->
+<!--                             filePattern="./logs/${sys:log.path}/error-%d{yyyy-MM-dd}-%i.log">-->
+<!--                    <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />-->
+<!--                    <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n" />-->
+<!--                    <Policies>-->
+<!--                        <TimeBasedTriggeringPolicy />-->
+<!--                        <SizeBasedTriggeringPolicy size="100 MB" />-->
+<!--                    </Policies>-->
+<!--                </RollingFile>-->
 
-<!--        <RollingFile name="AllRollingFileError" fileName="./logs/${sys:log.path}/allError.log"-->
-<!--                     filePattern="./logs/${sys:log.path}/error-%d{yyyy-MM-dd}-%i.log">-->
-<!--            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />-->
-<!--            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n" />-->
-<!--            <Policies>-->
-<!--                <TimeBasedTriggeringPolicy />-->
-<!--                <SizeBasedTriggeringPolicy size="100 MB" />-->
-<!--            </Policies>-->
-<!--        </RollingFile>-->
+<!--                <RollingFile name="AllRollingFileError" fileName="./logs/${sys:log.path}/allError.log"-->
+<!--                             filePattern="./logs/${sys:log.path}/error-%d{yyyy-MM-dd}-%i.log">-->
+<!--                    <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />-->
+<!--                    <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%p] - %l - %m%n" />-->
+<!--                    <Policies>-->
+<!--                        <TimeBasedTriggeringPolicy />-->
+<!--                        <SizeBasedTriggeringPolicy size="100 MB" />-->
+<!--                    </Policies>-->
+<!--                </RollingFile>-->
     </appenders>
 
     <loggers>
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
         <!--Logger节点用来单独指定日志的形式，name为包路径,比如要为org.springframework包下所有日志指定为INFO级别等。 -->
-<!--        <logger name="org.springframework" level="INFO"></logger>-->
-<!--        <logger name="org.mybatis" level="INFO"></logger>-->
+        <!--        <logger name="org.springframework" level="INFO"></logger>-->
+        <!--        <logger name="org.mybatis" level="INFO"></logger>-->
         <!-- Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出 -->
         <root level="debug">
             <appender-ref ref="Console"/>
-<!--            <appender-ref ref="RollingFileInfo"/>-->
-<!--            <appender-ref ref="RollingFileWarn"/>-->
-<!--            <appender-ref ref="RollingFileError"/>-->
+<!--            <AppenderRef ref="rocketmqAppender"/>-->
+<!--                        <appender-ref ref="RollingFileInfo"/>-->
+<!--                        <appender-ref ref="RollingFileWarn"/>-->
+<!--                        <appender-ref ref="RollingFileError"/>-->
         </root>
+
         <!--AsyncLogger :异步日志,LOG4J有三种日志模式,全异步日志,混合模式,同步日志,性能从高到底,线程越多效率越高,也可以避免日志卡死线程情况发生-->
         <!--additivity="false" : additivity设置事件是否在root logger输出，为了避免重复输出，可以在Logger 标签下设置additivity为”false”-->
-<!--        <AsyncLogger name="AsyncLogger" level="trace" includeLocation="true" additivity="false">-->
-<!--            <appender-ref ref="RollingFileError"/>-->
-<!--        </AsyncLogger>-->
+        <!--        <AsyncLogger name="AsyncLogger" level="trace" includeLocation="true" additivity="false">-->
+        <!--            <appender-ref ref="RollingFileError"/>-->
+        <!--        </AsyncLogger>-->
     </loggers>
 
 </configuration>

@@ -31,7 +31,6 @@ public class TestLambda1 {
 		});
 
 		ts2.add("a");
-
 		ts2.add("cde");
 		ts2.add("bc");
 		System.out.println(ts2);
@@ -68,7 +67,6 @@ public class TestLambda1 {
 	@Test
 	public void test3(){
 		List<Employee> list = filterEmployeeAge(emps);
-
 		for (Employee employee : list) {
 			System.out.println(employee);
 		}
@@ -131,6 +129,7 @@ public class TestLambda1 {
 	}
 
 	//优化方式三：Lambda 表达式
+	//
 	@Test
 	public void test6(){
 		List<Employee> list = filterEmployee(emps, (e) -> e.getAge() <= 35);

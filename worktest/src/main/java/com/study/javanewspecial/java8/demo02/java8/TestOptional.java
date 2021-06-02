@@ -20,7 +20,7 @@ public class TestOptional {
 	@Test
 	public void test4(){
 		Optional<Employee> op = Optional.of(new Employee(101, "张三", 18, 9999.99));
-
+		op.isPresent();
 		Optional<String> op2 = op.map(Employee::getName);
 		System.out.println(op2.get());
 

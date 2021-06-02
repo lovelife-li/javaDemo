@@ -26,16 +26,9 @@ public class Test {
             System.out.println(n);
         }
 
-        ExecutorService pool = Executors
-                .newSingleThreadExecutor();
-        Future<?> future = pool.submit(() -> {
-            try {
-//                String qq=pool.submit(()->"QQ").get();
-                System.out.println("我的：22");
-//                System.out.println("我的："+qq);
-            } catch (Exception e) {
-            }
-        });
+        System.out.println(-1&1);
+        System.out.println(2&3);
+        System.out.println(-2|3);
 
 
 

@@ -23,7 +23,7 @@ public class TestListToMap {
         bookList.add(new Book("The Fellowship of the Ring", 1954, "0395489318"));
         bookList.add(new Book("The Two Towers", 1954, "0345339711"));
         bookList.add(new Book("The Return of the King", 1955, "0618129111"));
-        bookList.add(new Book("The Return of the King", 1955, "0618129111"));
+        bookList.add(new Book("The Return of the King", 1955, "0618129112"));
 //        Map<String, String> stringStringMap = listToMap(bookList);
 //        System.out.println(stringStringMap);
 //        Map<Integer, Book> integerBookMap = listToMapWithDupKeyError(bookList);
@@ -63,7 +63,7 @@ public class TestListToMap {
                 (value1, value2) -> {
                     System.out.println("value1:"+value1);
                     System.out.println("value2:"+value2);
-                    return value1;
+                    return value2;
                 }));
     }
 

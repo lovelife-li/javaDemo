@@ -24,7 +24,7 @@ public class Consumer01 {
         consumer.setConsumeTimeout(10000);
 
     	// 订阅一个或者多个Topic，以及Tag来过滤需要消费的消息
-        consumer.subscribe("TopicTest", MessageSelector.bySql("a between 0 and 1"));
+        consumer.subscribe("TopicTest", MessageSelector.bySql("a BETWEEN 0 and 1"));
     	// 注册回调实现类来处理从broker拉取回来的消息
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override

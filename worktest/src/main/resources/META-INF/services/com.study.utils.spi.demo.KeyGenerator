@@ -1,0 +1,2 @@
+com.study.utils.spi.demo.SnowflakeKeyGenerator
+com.study.utils.spi.demo.UUIDKeyGenerator

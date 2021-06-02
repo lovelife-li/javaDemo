@@ -26,7 +26,7 @@ public class AsyncProducer {
         // 设置消息超时时间
         producer.setSendMsgTimeout(10000);
 
-        int messageCount = 10;
+        int messageCount = 1;
         // 根据消息数量实例化倒计时计算器
         final CountDownLatch2 countDownLatch = new CountDownLatch2(messageCount);
         for (int i = 0; i < messageCount; i++) {

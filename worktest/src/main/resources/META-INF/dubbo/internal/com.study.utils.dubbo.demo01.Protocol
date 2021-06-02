@@ -1,0 +1,3 @@
+dubbo=com.study.utils.dubbo.demo01.DubboProtocol
+cloud=com.study.utils.dubbo.demo01.SpringCloudProtocol
+thrift=com.study.utils.dubbo.demo01.ThriftProtocol
