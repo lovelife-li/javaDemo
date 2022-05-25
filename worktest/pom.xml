@@ -12,7 +12,7 @@
     <properties>
         <java.version>8</java.version>
         <jmh.version>1.14.1</jmh.version>
-        <spring.version>5.2.2.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
     </properties>
 
     <dependencies>
